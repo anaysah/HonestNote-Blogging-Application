@@ -1,0 +1,23 @@
+{% extends 'main.html' %}
+{% block content %}
+    <h1>Post</h1>
+    <ul>
+        {% for post in object_list %}
+            <li class="mb-2">
+                <a href="{% url 'blogPage' post.slug %}">{{ post.title }}</a> {{ post.author }}<br/>
+                {{ post.date }}
+
+                {% if user.is_authenticated %}
+                
+                <small>
+                <a href="{% url 'editBlog' post.slug %}">Edit</a>
+                <a href="{% url 'deleteBlog' post.slug %}">Delete</a>
+                </small>
+                {% endif %}
+
+                <br/>
+                {{ post.body|slice:"200"|safe }}
+            </li >
+        {% endfor %}
+    </ul>
+{% endblock content %}
