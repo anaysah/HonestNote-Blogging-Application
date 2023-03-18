@@ -15,7 +15,7 @@ class Category(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=255)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    category = models.CharField(max_length=50, default="general")
+    category = models.ForeignKey(Category, on_delete=models.PROTECT)
     body = models.TextField()
     slug = models.SlugField(unique=True, blank=True, default="Awsome blog")
     date = models.DateTimeField(auto_now_add=True)
