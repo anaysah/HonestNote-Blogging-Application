@@ -1,17 +1,17 @@
 {% extends 'main.html' %}
 {% block content %}
-    <h1>Post</h1>
+
+{% if blogs %}
+<h1>{{ cats|title }}</h1>
     <ul>
-        {% for post in object_list %}
+        {% for post in blogs reversed %}
             <li class="mb-2">
                 <a href="{% url 'blogPage' post.slug %}">{{ post.title }}</a> {{ post.author }}<br/>
                 {{ post.date }}
-                <a href="{% url 'allBlogCategory' post.category|slugify %}">{{ post.category }}</a>
-                {% comment %} <a href="{% url 'allBlogCategory' post.category %}">{{ post.category }}</a> {% endcomment %}
-
-                {% if user.is_authenticated and user.id == post.author.id %}
-                <small>
                 
+                {% if user.is_authenticated %}
+                
+                <small>
                 <a href="{% url 'editBlog' post.slug %}">Edit</a>
                 <a href="{% url 'deleteBlog' post.slug %}">Delete</a>
                 </small>
@@ -22,4 +22,8 @@
             </li >
         {% endfor %}
     </ul>
+{% else %}
+<div class='mt-3'>Sorry we dont have this category for now</div>
+{% endif %}
+    
 {% endblock content %}

@@ -1,10 +1,9 @@
 {% extends 'main.html' %}
-{% block title %}Add Post{% endblock title %}
-
+{% block title %}Delete Blog{% endblock title %}
 
 {% block content %}
 
-{% if user.is_authenticated %}
+{% if user.is_authenticated and user.id == post.author.id %}
 <h1>Delete Blog</h1>
     <div class="form-group">
     <form action="" method="post" >
