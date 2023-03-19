@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 from datetime import datetime, date
+# from ckeditor.fields import RichTextField
 
 class Category(models.Model):
     name = models.CharField(max_length=50)

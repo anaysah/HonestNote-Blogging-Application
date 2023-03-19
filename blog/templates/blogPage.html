@@ -6,15 +6,22 @@
     <span>By: {{ post.author | title }}</span>
     <hr/>
     <div>{{ post.body|safe }}</div>
+    <br><br>
+    <div>totol Likes: {{ totalLikes }}</div>
     {% if user.is_authenticated %}
     <form action="{% url 'likeBlog' post.slug %}">
     {% csrf_token %}
+    {% if liked %}
     <button type="submit" class="btn btn-primary">Like</button>
+    {% else %}
+    <button type="submit" class="btn btn-primary">UnLike</button>
+    {% endif %}
+    
     </form>
     
     {% else %}
-    
+    <div>to like this post pls login</div>
     {% endif %}
-    <div>totol Likes: {{ totalLikes }}</div>
+    
     <a href="{% url 'home' %}"><button type="button" class="btn btn-success">HOME</button></a>
 {% endblock content %}

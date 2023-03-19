@@ -25,17 +25,26 @@ class blogPage(DetailView):
         body_html = self.cleaned_data['body']
         return SafeText(body_html)
     def get_context_data(self,*args, **kwargs):
-        allBlog = get_object_or_404(Post, slug=self.kwargs['slug'])
-        totalLikes = allBlog.total_likes()
+        blog = get_object_or_404(Post, slug=self.kwargs['slug'])
+        totalLikes = blog.total_likes()
         allCategory = Category.objects.all()
+        liked = False
+        if blog.likes.filter(id=self.request.user.id).exists():
+            liked = True
+
         context = super(blogPage,self).get_context_data(*args,**kwargs)
         context['allCategory'] = allCategory
         context['totalLikes'] = totalLikes
+        context['liked'] = liked
         return context
 
 def likeBlog(req,slug):
     blog = get_object_or_404(Post, slug=slug)
-    blog.likes.add(req.user)
+    user_id = req.user.id
+    if blog.likes.filter(id=user_id).exists():
+        blog.likes.remove(req.user)
+    else:
+        blog.likes.add(req.user)
     return HttpResponseRedirect(reverse('blogPage',args=[slug]))
 
 
