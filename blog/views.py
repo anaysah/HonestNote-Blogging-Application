@@ -1,10 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView , DetailView, CreateView, UpdateView, DeleteView
 from django.utils.safestring import SafeText
 from .models import Post, Category
 from .forms import addBlogForm, editBlogForm, addCategoryForm
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponseRedirect
 
 
 class homeView(ListView):
@@ -23,7 +24,21 @@ class blogPage(DetailView):
     def clean_body_html(self):
         body_html = self.cleaned_data['body']
         return SafeText(body_html)
-    
+    def get_context_data(self,*args, **kwargs):
+        allBlog = get_object_or_404(Post, slug=self.kwargs['slug'])
+        totalLikes = allBlog.total_likes()
+        allCategory = Category.objects.all()
+        context = super(blogPage,self).get_context_data(*args,**kwargs)
+        context['allCategory'] = allCategory
+        context['totalLikes'] = totalLikes
+        return context
+
+def likeBlog(req,slug):
+    blog = get_object_or_404(Post, slug=slug)
+    blog.likes.add(req.user)
+    return HttpResponseRedirect(reverse('blogPage',args=[slug]))
+
+
 class addBlog(LoginRequiredMixin, CreateView):
     model = Post
     form_class = addBlogForm

@@ -6,6 +6,15 @@
     <span>By: {{ post.author | title }}</span>
     <hr/>
     <div>{{ post.body|safe }}</div>
-
+    {% if user.is_authenticated %}
+    <form action="{% url 'likeBlog' post.slug %}">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary">Like</button>
+    </form>
+    
+    {% else %}
+    
+    {% endif %}
+    <div>totol Likes: {{ totalLikes }}</div>
     <a href="{% url 'home' %}"><button type="button" class="btn btn-success">HOME</button></a>
 {% endblock content %}
