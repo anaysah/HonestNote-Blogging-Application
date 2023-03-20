@@ -18,7 +18,8 @@
                 {% endif %}
 
                 <br/>
-                {{ post.body|slice:"200"|safe }}
+                {% comment %} {{ post.body|slice:"200"|safe }} {% endcomment %}
+                {{ post.snippet }}
             </li >
         {% endfor %}
     </ul>

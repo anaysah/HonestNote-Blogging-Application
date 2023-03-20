@@ -5,7 +5,12 @@
     <span>{{ post.date }}</span><br>
     <span>By: {{ post.author | title }}</span>
     <hr/>
-    <div>{{ post.body|safe }}</div>
+    <div>
+    {% if post.image %}
+    <img src="{{ post.image.url }}" alt="" class="img-fluid"><br>
+    {% endif %}
+    
+    {{ post.body|safe }}</div>
     <br><br>
     <div>totol Likes: {{ totalLikes }}</div>
     {% if user.is_authenticated %}
