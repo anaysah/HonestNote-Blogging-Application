@@ -4,6 +4,16 @@ from django.urls import reverse
 from datetime import datetime, date
 from ckeditor.fields import RichTextField
 
+class Profile(models.Model):
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    bio = models.TextField()
+    profile_img = models.ImageField(blank=True, null=True, upload_to='images/profile/')
+    website_url = models.CharField(max_length=255, blank=True, null=True)
+    insta_url = models.CharField(max_length=255, blank=True, null=True)
+
+    def __str__(self) -> str:
+        return str(self.user)
+
 class Category(models.Model):
     name = models.CharField(max_length=50)
     def __str__(self) -> str:
