@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from datetime import datetime, date
 from ckeditor.fields import RichTextField
+import os
+from uuid import uuid4
 
 class Profile(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
@@ -23,11 +25,25 @@ class Category(models.Model):
         return reverse('home')
 
 
+
+class path_and_rename:
+    def __init__(self, basePath):
+        self.basePath = basePath
+    def wrapper(self, instance, filename):
+        ext = filename.split('.')[-1] #to get the extension of the file like .png
+        if instance.slug:
+            filename = '{}.{}'.format(instance.slug, ext)
+        else:
+            # set filename as random string
+            filename = '{}.{}'.format(uuid4().hex, ext)
+        
+        return os.path.join(self.basePath, filename)
+
 class Post(models.Model):
     title = models.CharField(max_length=255)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
-    image = models.ImageField(blank=True, null=True, upload_to='images/')
+    image = models.ImageField(blank=True, null=True, upload_to=path_and_rename('images/blogThumbnail/').wrapper)
     # body = models.TextField()
     snippet = models.CharField(max_length=255)
     body = RichTextField(blank=True, null=True)
