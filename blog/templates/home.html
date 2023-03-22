@@ -1,38 +1,30 @@
 {% extends 'main.html' %}
+{% load static %}
 {% block content %}
-    <h1>Post</h1>
-    <ul>
-        {% for post in object_list %}
-            <div>
-            <div class="card mb-3">
-            {% if post.image %}
-            <img class="card-img-top" src="{{ post.image.url }}" alt="Card image cap">          
-            {% else %}
-            {% endif %}
-  
-  <div class="card-body">
-    <h5 class="card-title"><a href="{% url 'blogPage' post.slug %}">{{ post.title }}</a></h5>
-    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-  </div>
-</div>
-                {% comment %} <a href="{% url 'blogPage' post.slug %}">{{ post.title }}</a> {{ post.author }}<br/>
-                {{ post.date }}
-                <a href="{% url 'allBlogCategory' post.category|slugify %}">{{ post.category }}</a>
-                <a href="{% url 'allBlogCategory' post.category %}">{{ post.category }}</a>
+    <link rel="stylesheet" href="{% static 'blog/styles/home.css' %}">
 
-                {% if user.is_authenticated and user.id == post.author.id %}
-                <small>
-                
-                <a href="{% url 'editBlog' post.slug %}">Edit</a>
-                <a href="{% url 'deleteBlog' post.slug %}">Delete</a>
-                </small>
-                {% endif %}
 
-                <br/>
-                {{ post.body|slice:"200"|safe }}
-                {{ post.snippet }} {% endcomment %}
+    {% for post in object_list %}
+        <div class="row justify-content-center mb-3">
+            <div class="col-lg-7">
+                <div class="card">
+                    {% if post.image %}
+                        <img class="card-img-top" src="{{ post.image.url }}" alt="Card image cap">
+                    {% else %}
+                    {% endif %}
+                    <div class="card-body">
+                        <small><strong><a href="{% url 'allBlogCategory' post.category|slugify %}">{{ post.category|title }}</a></strong></small>
+                        <h4 class="card-title">
+                            <a href="{% url 'blogPage' post.slug %}">{{ post.title|title }}</a>
+                        </h4>
+                        <p class="card-text">{{ post.snippet }}</p>
+                        <p class="card-text row">
+                            <small class="text-muted col">{{ post.date }}</small>
+                            <small class="text-muted col" align="right">{{ post.author.get_full_name }}</small>
+                        </p>
+                    </div>
+                </div>
             </div>
-        {% endfor %}
-    </ul>
+        </div>
+    {% endfor %}
 {% endblock content %}
