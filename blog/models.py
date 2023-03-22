@@ -44,3 +44,11 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('blogPage', args=(self.slug,))
 
+class Comment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.PROTECT, related_name='comments')
+    name = models.CharField(max_length=255)
+    body = models.TextField()
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return f'{self.post.title} - {self.name}'

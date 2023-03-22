@@ -20,7 +20,18 @@
   </div>
   <br>
   <br>
-  <div>totol Likes: {{ totalLikes }}</div>
+  <div>totol Likes: {{ totalLikes }}</div><br>
+
+  {% if not post.comments.all %}
+  add one
+  {% else %}
+  {% for comment in post.comments.all %}
+  {{ comment.name }} - {{ comment.date}}
+  <br>
+  <strong>{{ comment.body }}</strong>
+  <br><br>
+  {% endfor %}
+  {% endif %}
 
 
   <div class="card mb-3">
