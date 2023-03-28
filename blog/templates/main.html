@@ -1,90 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-      {% block title %}
-        Blog Web App
-      {% endblock title %}
-    </title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
-          crossorigin="anonymous">
 
-          {% load static %}
-          <link rel="stylesheet" href="{% static 'blog/styles/main.css' %}">
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary "
-         data-bs-theme="dark">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">Blog Web App</a>
-        <button class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent"
-                aria-expanded="false"
-                aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
-            </li>
-            {% if user.is_authenticated %}
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'addBlog' %}">Add Blog</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'addCategory' %}">Add Category</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'UserEdit' %}">Edit Profile</a>
-              </li>
-            {% else %}
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'signup' %}">signup</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'login' %}">Login</a>
-              </li>
-              
-            {% endif %}
-            <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
-          </a>
-          <ul class="dropdown-menu">
-          {% for category in allCategory %}
-          <li><a class="dropdown-item" href="{% url 'allBlogCategory' category|slugify %}">{{ category }}</a></li>
-          {% endfor %}
-          </ul>
-        </li>
-          </ul>
-          <form class="d-flex" role="search">
-            <input class="form-control me-2"
-                   type="search"
-                   placeholder="Search"
-                   aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-          </form>
-        </div>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    {% block title %}
+    Blog Web App
+    {% endblock title %}
+  </title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  {% load static %}
+  <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="{% static 'blog/styles/main.css' %}">
+</head>
+
+<body>
+  <header>
+    <div id="headerBox">
+      <a href="{% url 'home' %}"><h4 class="website-name">The Blog</h4></a>
+
+      <span onclick="changeTheme(event)" class="changeTheme-btn">          
+          <i class="fa-solid fa-circle-half-stroke fa-xl changeTheme-icon" ></i>
+      </span>
+      <div class="search-box">
+        <form action="" method="post">
+          <div class="search-bar">
+            {% csrf_token %}
+            <input type="text" placeholder="Search...">
+            <button type="submit" class="flex-center" >
+              <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+            </button>
+          </div>
+        </form>
       </div>
-    </nav>
-    <div class="container p-3">
-      {% block content %}
-      {% endblock content %}
+
     </div>
-  </body>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-          integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-          crossorigin="anonymous"></script>
+  </header>
+  {% comment %} <nav class="navbar navbar-expand-lg bg-body-tertiary " data-bs-theme="dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Blog Web App</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+          </li>
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'addBlog' %}">Add Blog</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'addCategory' %}">Add Category</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'UserEdit' %}">Edit Profile</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'signup' %}">signup</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Login</a>
+          </li>
+
+          {% endif %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">Dropdown</a>
+            <ul class="dropdown-menu">
+              {% for category in allCategory %}
+              <li><a class="dropdown-item" href="{% url 'allBlogCategory' category|slugify %}">{{ category }}</a></li>
+              {% endfor %}
+            </ul>
+          </li>
+        </ul>
+        <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav> {% endcomment %}
+  <div class="container-fluid p-3">
+    {% block content %}
+    {% endblock content %}
+  </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+<script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
+<script src="{% static 'blog/js/main.js' %}"></script>
 </html>

@@ -1,84 +1,86 @@
 {% extends 'main.html' %}
 {% load static %}
 {% block title %}
-  {{ post.slug | title }}
+  {{ post.slug |title }}
 {% endblock title %}
 {% block content %}
-  <h1 style="display:inline-block">{{ post.title | title }}</h1>
-  <a href="{% url 'editBlog' post.slug %}">Edit</a>
-  <br>
-  <span>{{ post.date }}</span>
-  <br>
-  <span>By: {{ post.author | title }}</span>
-  <hr/>
-  <div>
-    {% if post.image %}
-      <img src="{{ post.image.url }}" alt="" class="img-fluid">
+  <div class="container">
+    <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <h1 style="display:inline-block">{{ post.title | title }}</h1>
+      {% comment %} <a href="{% url 'editBlog' post.slug %}">Edit</a> {% endcomment %}
       <br>
-    {% endif %}
-    {{ post.body|safe }}
-  </div>
-  <br>
-  <br>
-  <div>totol Likes: {{ totalLikes }}</div><br>
-
-  {% if not post.comments.all %}
-  add one
-  {% else %}
-  {% for comment in post.comments.all %}
-  {{ comment.name }} - {{ comment.date}}
-  <br>
-  <strong>{{ comment.body }}</strong>
-  <br><br>
-  {% endfor %}
-  {% endif %}
-
-
-  <div class="card mb-3">
-    <div class="row g-0">
-      <div class="col">
-        {% if post.author.profile.profile_img %}
-          <img src="{{ post.author.profile.profile_img.url }}"
-               class="img-fluid rounded-start"
-               alt="...">
-        {% else %}
-          <img src="{% static 'blog/pic.jpg' %}"
-               class="img-fluid rounded-start"
-               alt="..."
-                width=100px
-               >
+      <span>{{ post.date }}</span>
+      <br>
+      <span>By: {{ post.author | title }}</span>
+      <hr/>
+      <div>
+        {% if post.image %}
+          <img src="{{ post.image.url }}" alt="" class="img-fluid">
+          <br>
         {% endif %}
+        {{ post.body|safe }}
       </div>
-      <div class="col-md-8">
-        <div class="card-body">
-          <h5 class="card-title">{{ post.author.get_full_name }}</h5>
-          <p class="card-text">{{ post.author.profile.bio }}</p>
-          <p class="card-text">
-            <small class="text-muted">
-              <a href="{{ post.author.profile.insta_url }}">Instagram</a>
-              <a href="{{ post.author.profile.insta_url }}">Website</a>
-            </small>
-          </p>
+      <br>
+      <br>
+      <div>totol Likes: {{ totalLikes }}</div>
+      <br>
+      {% if not post.comments.all %}
+        add one
+      {% else %}
+        {% for comment in post.comments.all %}
+          {{ comment.name }} - {{ comment.date }}
+          <br>
+          <strong>{{ comment.body }}</strong>
+          <br>
+          <br>
+        {% endfor %}
+      {% endif %}
+      <div class="card mb-3">
+        <div class="row g-0">
+          <div class="col">
+            {% if post.author.profile.profile_img %}
+              <img src="{{ post.author.profile.profile_img.url }}"
+                   class="img-fluid rounded-start"
+                   alt="...">
+            {% else %}
+              <img src="{% static 'blog/pic.jpg' %}"
+                   class="img-fluid rounded-start"
+                   alt="..."
+                   width="100px">
+            {% endif %}
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">{{ post.author.get_full_name }}</h5>
+              <p class="card-text">{{ post.author.profile.bio }}</p>
+              <p class="card-text">
+                <small class="text-muted">
+                  <a href="{{ post.author.profile.insta_url }}">Instagram</a>
+                  <a href="{{ post.author.profile.insta_url }}">Website</a>
+                </small>
+              </p>
+            </div>
+          </div>
         </div>
+      </div>
+      {% comment %} <img src="{{ post.author.profile.profile_img.url }}" alt="" class="rounded-circle" height=75px width=75px> {% endcomment %}
+      {% if user.is_authenticated %}
+        <form action="{% url 'likeBlog' post.slug %}">
+          {% csrf_token %}
+          {% if liked %}
+            <button type="submit" class="btn btn-primary">UnLike</button>
+          {% else %}
+            <button type="submit" class="btn btn-primary">Like</button>
+          {% endif %}
+        </form>
+      {% else %}
+        <div>to like this post pls login</div>
+      {% endif %}
+      <a href="{% url 'home' %}">
+        <button type="button" class="btn btn-success">HOME</button>
+      </a>
       </div>
     </div>
   </div>
-
-
-  {% comment %} <img src="{{ post.author.profile.profile_img.url }}" alt="" class="rounded-circle" height=75px width=75px> {% endcomment %}
-  {% if user.is_authenticated %}
-    <form action="{% url 'likeBlog' post.slug %}">
-      {% csrf_token %}
-      {% if liked %}
-        <button type="submit" class="btn btn-primary">UnLike</button>
-      {% else %}
-        <button type="submit" class="btn btn-primary">Like</button>
-      {% endif %}
-    </form>
-  {% else %}
-    <div>to like this post pls login</div>
-  {% endif %}
-  <a href="{% url 'home' %}">
-    <button type="button" class="btn btn-success">HOME</button>
-  </a>
 {% endblock content %}

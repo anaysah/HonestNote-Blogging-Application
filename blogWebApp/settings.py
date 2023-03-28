@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'blog',
     'authen',
     'ckeditor',
+    'fontawesomefree',
 ]
 
 MIDDLEWARE = [

@@ -1,8 +1,9 @@
 .card{
     /* border: 2px solid red; */
+    background-color: var(--fgColor);
 }
 
 a{
-    color: black;
+    /* color: black; */
     text-decoration: solid;
 }

@@ -19,8 +19,8 @@
                         </h4>
                         <p class="card-text">{{ post.snippet }}</p>
                         <p class="card-text row">
-                            <small class="text-muted col">{{ post.date }}</small>
-                            <small class="text-muted col" align="right">{{ post.author.get_full_name }}</small>
+                            <small class=" col text-color">{{ post.date|date:"F j, Y" }}</small>
+                            <small class=" col text-color" align="right">{{ post.author.get_full_name }}</small>
                         </p>
                     </div>
                 </div>
