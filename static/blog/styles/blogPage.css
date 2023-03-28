@@ -1,0 +1,26 @@
+.author-pic {
+    width: 70px;
+}
+
+.main-body-container {
+    padding-top: 1.5rem;
+    font-family: "Poppins", sans-serif;
+    color: var(--pColor);
+
+}
+
+.main-body-box {
+    background-color: var(--fgColor);
+    padding: 2rem;
+    border-radius: var(--main-radius);
+    /* width: fit-content; */
+}
+
+.blog-title {
+
+    font-weight: 700;
+    font-size: 34px;
+
+    color: var(--textColor2);
+    /* color: blueviolet; */
+}

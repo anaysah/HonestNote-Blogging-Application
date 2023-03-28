@@ -16,7 +16,8 @@
     --bgColor:#1E2021;
     --fgColor:#181A1B;
     --textColor:white;
-    
+    --textColor2:#0d6efd;
+    --pColor: #ABA398;
     --header-height:56px;
     --header-bg: var(--fgColor);
     --header-shadow: rgba(0,0,0, 0.1);
@@ -38,6 +39,8 @@
 .text-color{
     color: var(--textColor);
 }
+
+
 
 body{
     /* background-color: black; */
@@ -64,6 +67,11 @@ header{
     margin: 0;
     font-weight: bold;
     margin-right: 1rem;
+    /* text-decoration: underline; */
+}
+
+a{
+    text-decoration: none;
 }
 
 #headerBox{
@@ -128,4 +136,9 @@ header{
 
 .search-bar button:hover{
     background-color: #e5e5e5;
+}
+
+
+.side-footer{
+    background-color: var(--fgColor);
 }
