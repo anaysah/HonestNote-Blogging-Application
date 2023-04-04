@@ -1,12 +1,17 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView , DetailView, CreateView, UpdateView, DeleteView
 from django.utils.safestring import SafeText
+from django.db.models import Q
 from .models import Post, Category
 from .forms import addBlogForm, editBlogForm, addCategoryForm
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 
+def search_results(request):
+    query = request.GET.get('query')
+    object_list = Post.objects.filter(Q(title__icontains=query) | Q(body__icontains=query))
+    return render(request, 'home.html', {'object_list': object_list})
 
 class homeView(ListView):
     model = Post
