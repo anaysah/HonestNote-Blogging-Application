@@ -5,15 +5,16 @@
 
 
     {% for post in object_list %}
-        <div class="row justify-content-center mb-3">
-            <div class="col-lg-7">
+        
+        
+            
                 <div class="card">
                     {% if post.image %}
                         <img class="card-img-top" src="{{ post.image.url }}" alt="Card image cap">
                     {% else %}
                     {% endif %}
                     <div class="card-body">
-                        <small><strong><a href="{% url 'allBlogCategory' post.category|slugify %}">{{ post.category|title }}</a></strong></small>
+                        <small><strong><a href="{% url 'blogs_by_category' post.category|slugify %}">{{ post.category|title }}</a></strong></small>
                         <h4 class="card-title">
                             <a href="{% url 'blogPage' post.slug %}">{{ post.title|title }}</a>
                         </h4>
@@ -24,7 +25,6 @@
                         </p>
                     </div>
                 </div>
-            </div>
-        </div>
+            
     {% endfor %}
 {% endblock content %}

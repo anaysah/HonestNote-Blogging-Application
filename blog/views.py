@@ -8,16 +8,16 @@ from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 
-def search_results(request):
-    query = request.GET.get('query')
-    object_list = Post.objects.filter(Q(title__icontains=query) | Q(body__icontains=query))
-    return render(request, 'home.html', {'object_list': object_list})
+# def search_results(request):
+#     query = request.GET.get('query')
+#     object_list = Post.objects.filter(Q(title__icontains=query) | Q(body__icontains=query))
+#     return render(request, 'home.html', {'object_list': object_list})
 
-def blogs_by_category(request, category_name):
-    category = Category.objects.get(name=category_name)
-    blogs = Post.objects.filter(category=category)
-    context = {'object_list': blogs, 'category': category}
-    return render(request, 'home.html', context)
+# def blogs_by_category(request, category_name):
+#     category = Category.objects.get(name=category_name)
+#     blogs = Post.objects.filter(category=category)
+#     context = {'object_list': blogs, 'category': category}
+#     return render(request, 'home.html', context)
 
 class homeView(ListView):
     model = Post
@@ -28,6 +28,21 @@ class homeView(ListView):
         context = super(homeView,self).get_context_data(*args,**kwargs)
         context['allCategory'] = allCategory
         return context
+
+class SearchView(homeView):
+    def get_queryset(self):
+        query = self.request.GET.get('query')
+        if query:
+            return Post.objects.filter(Q(title__icontains=query) | Q(body__icontains=query))
+        else:
+            return super().get_queryset()
+        
+class BlogsByCategory(homeView):
+    def get_queryset(self):
+        category_name = self.kwargs['category_name']
+        self.category = Category.objects.get(name__iexact=category_name)
+        return Post.objects.filter(category=self.category)
+
 
 class blogPage(DetailView):
     model = Post
@@ -92,10 +107,10 @@ class addCategory(CreateView):
     form_class = addCategoryForm
     template_name = 'addCategory.html'
 
-def allBlogCategory(req, cats):
-    try:
-        category = Category.objects.get(name__iexact=cats.replace('-',' '))  # Get the Category object
-        blogs = Post.objects.filter(category=category)  # Filter the Blog objects by the Category object
-    except:
-        blogs = None
-    return render(req,'allBlogCategory.html' ,{"cats":cats.replace('-',' '),"blogs":blogs} )
+# def allBlogCategory(req, cats):
+#     try:
+#         category = Category.objects.get(name__iexact=cats.replace('-',' '))  # Get the Category object
+#         blogs = Post.objects.filter(category=category)  # Filter the Blog objects by the Category object
+#     except:
+#         blogs = None
+#     return render(req,'allBlogCategory.html' ,{"cats":cats.replace('-',' '),"blogs":blogs} )
