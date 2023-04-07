@@ -17,7 +17,8 @@ class Profile(models.Model):
         return str(self.user)
 
 class Category(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
+    # icon_class_name = models.CharField(max_length=50, blank=False)
     def __str__(self) -> str:
         return self.name
     

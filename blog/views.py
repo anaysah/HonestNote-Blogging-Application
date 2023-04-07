@@ -13,6 +13,12 @@ def search_results(request):
     object_list = Post.objects.filter(Q(title__icontains=query) | Q(body__icontains=query))
     return render(request, 'home.html', {'object_list': object_list})
 
+def blogs_by_category(request, category_name):
+    category = Category.objects.get(name=category_name)
+    blogs = Post.objects.filter(category=category)
+    context = {'object_list': blogs, 'category': category}
+    return render(request, 'home.html', context)
+
 class homeView(ListView):
     model = Post
     template_name = 'home.html'
