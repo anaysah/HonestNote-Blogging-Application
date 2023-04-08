@@ -6,9 +6,9 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'blog/styles/blogPage.css' %}">
 
-<div class="container main-body-container">
-  <div class="row justify-content-center">
-    <div class="col-lg-9 main-body-box">
+<div class="container-fluid p-0">
+        <div class="row  mb-3 justify-content-center"">
+        <div class="col-md-8 main-body-box ">
 
       <div class="text-center">
         <img src="{% static 'blog/pic.jpg' %}" alt="Image" class="author-pic img-fluid rounded-circle mx-auto">
@@ -21,32 +21,8 @@
       <img class="img-fluid rounded mb-4" src="{{ post.image.url }}" alt="Card image cap">
       {% endif %}
 
-      {% comment %} <h1 style="display:inline-block"></h1> {% endcomment %}
-      {% comment %} <a href="{% url 'editBlog' post.slug %}">Edit</a> {% endcomment %}
-      {% comment %} <br>
-      <span>{{ post.date }}</span>
-      <br>
-      <span>By: {{ post.author.get_full_name | title }}</span>
-      <hr />
-      <div>
-        {% if post.image %}
-        <img src="{{ post.image.url }}" alt="" class="img-fluid">
-        <br>
-        {% endif %} {% endcomment %}
+      
         {{ post.body|safe }}
-      {% comment %} </div> {% endcomment %}
-
-      {% comment %} <div class="row mt-5 pt-5 border-top">
-        <div class="col-12">
-        <span class="fw-bold small mb-1">Share</span>
-        <ul class="social list-unstyled d-flex gap-2">
-        <li><a href="#"><i class="fa-brands fa-facebook fa-xl"></i></a></li>
-        <li><a href="#"><i class="fa-brands fa-twitter fa-xl"></i></a></li>
-        <li><a href="#"><i class="fa-brands fa-instagram fa-xl"></i></a></li>
-        <li><a href="#"><i class="fa-brands fa-square-snapchat fa-xl"></i></a></li>
-        </ul>
-        </div>
-      </div> {% endcomment %}
 
       <div class="row mt-5 pt-5 border-top">
       <div class="col-12">

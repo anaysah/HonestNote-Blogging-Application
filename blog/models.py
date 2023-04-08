@@ -18,7 +18,7 @@ class Profile(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=50, unique=True)
-    # icon_class_name = models.CharField(max_length=50, blank=False)
+    icon_class_name = models.CharField(max_length=50)
     def __str__(self) -> str:
         return self.name
     

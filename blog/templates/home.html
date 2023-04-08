@@ -2,29 +2,40 @@
 {% load static %}
 {% block content %}
     <link rel="stylesheet" href="{% static 'blog/styles/home.css' %}">
-
-
-    {% for post in object_list %}
-        
-        
-            
-                <div class="card">
-                    {% if post.image %}
-                        <img class="card-img-top" src="{{ post.image.url }}" alt="Card image cap">
-                    {% else %}
-                    {% endif %}
-                    <div class="card-body">
-                        <small><strong><a href="{% url 'blogs_by_category' post.category|slugify %}">{{ post.category|title }}</a></strong></small>
-                        <h4 class="card-title">
-                            <a href="{% url 'blogPage' post.slug %}">{{ post.title|title }}</a>
-                        </h4>
-                        <p class="card-text">{{ post.snippet }}</p>
-                        <p class="card-text row">
-                            <small class=" col text-color">{{ post.date|date:"F j, Y" }}</small>
-                            <small class=" col text-color" align="right">{{ post.author.get_full_name }}</small>
-                        </p>
-                    </div>
+    <div class="container-fluid p-0">
+        <div class="row  mb-3">
+            <div class="col-0 col-md-2 d-flex flex-column mt-3" id="category-body">
+                <span>Categories</span>
+                <div class="d-flex flex-md-column flex-wrap container-fluid p-0 gap-2 pt-2">
+                    {% for category in allCategory %}
+                        <span class="category-box">
+                            <a href="{% url 'blogs_by_category' category %}"
+                               class="d-flex align-items-baseline gap-2"><i class="fa-solid {{ category.icon_class_name }} fa-sm"></i><span>{{ category|title }}</span></a>
+                        </span>
+                    {% endfor %}
                 </div>
-            
-    {% endfor %}
+            </div>
+            <div class="col-md-8 ">
+                {% for post in object_list %}
+                    <div class="card mt-3">
+                        {% if post.image %}
+                            <img class="card-img-top" src="{{ post.image.url }}" alt="Card image cap">
+                        {% else %}
+                        {% endif %}
+                        <div class="card-body">
+                            <small><strong><a href="{% url 'blogs_by_category' post.category|slugify %}">{{ post.category|title }}</a></strong></small>
+                            <h4 class="card-title">
+                                <a href="{% url 'blogPage' post.slug %}">{{ post.title|title }}</a>
+                            </h4>
+                            <p class="card-text">{{ post.snippet }}</p>
+                            <p class="card-text row">
+                                <small class=" col text-color">{{ post.date|date:"F j, Y" }}</small>
+                                <small class=" col text-color" align="right">{{ post.author.get_full_name }}</small>
+                            </p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 {% endblock content %}

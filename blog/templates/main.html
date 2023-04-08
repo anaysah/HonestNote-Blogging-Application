@@ -94,23 +94,10 @@
     </div>
     </nav> {% endcomment %}
     <div class="main-body">
-      <div class="container-fluid p-0">
-        <div class="row  mb-3">
-          <div class="col-0 col-md-2">
-            {% comment %} <h3>Category</h3> {% endcomment %}
-            {% for category in allCategory %}
-              <span>
-                <a class="dropdown-item"
-                   href="{% url 'blogs_by_category' category %}">{{ category|title }}</a>
-              </span>
-            {% endfor %}
-          </div>
-          <div class="col-md-8 ">
+      
             {% block content %}
             {% endblock content %}
-          </div>
-        </div>
-      </div>
+          
     </div>
     <div class="side-footer p-4">
       <div class="container">
@@ -122,7 +109,7 @@
                 <script type="text/javascript"
                         async=""
                         src="https://www.google-analytics.com/analytics.js"></script>
-                <script>document.write(new Date().getFullYear());</script>2023 All rights reserved | This website made with ❤ and django
+                <script>document.write(new Date().getFullYear());</script> All rights reserved | This website made with ❤ and django
                 <br>
                 <i class="icon-heart text-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" rel="nofollow noopener">Ajay Sahu</a>
               </p>
