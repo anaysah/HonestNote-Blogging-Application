@@ -134,7 +134,7 @@ body {
 .slide-body {
     max-width: var(--site-width);
     width: 100%;
-    padding: 12px;
+    /* padding: 12px; */
     padding-bottom: 2.2rem;
     /* height: 93%; */
     /* border: 1px white solid; */
@@ -192,6 +192,6 @@ span {
 
 .main-body {
     max-width: var(--site-width);
-    padding: 0 1rem;
+    /* padding: 0 0; */
     margin: auto;
 }

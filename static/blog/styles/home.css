@@ -1,4 +1,9 @@
 .card{
     /* border: 2px solid red; */
     background-color: var(--fgColor);
+    /* font-family: "Poppins", sans-serif; */
+}
+
+.card a{
+    font-family: "Poppins", sans-serif;
 }

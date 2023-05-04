@@ -21,3 +21,5 @@ secret_key.txt
 .env
 
 .vscode
+
+task.txt
