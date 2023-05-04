@@ -2,11 +2,11 @@
 {% load static %}
 {% block content %}
     <link rel="stylesheet" href="{% static 'blog/styles/home.css' %}">
-    <div class="container-fluid p-0">
+    <div class="container-fluid p-0 py-3">
         <div class="row  mb-3">
-            <div class="col-0 col-md-2 d-flex flex-column mt-3" id="category-body">
+            <div class="col-0 col-lg-2 d-flex flex-column" id="category-body">
                 <span>Categories</span>
-                <div class="d-flex flex-md-column flex-wrap container-fluid p-0 gap-2 pt-2">
+                <div class="d-flex flex-lg-column flex-wrap container-fluid p-0 gap-2 mt-2">
                     {% for category in allCategory %}
                         <span class="category-box">
                             <a href="{% url 'blogs_by_category' category %}"
@@ -15,9 +15,10 @@
                     {% endfor %}
                 </div>
             </div>
-            <div class="col-md-8 ">
+            <div class="col-lg-8 mt-lg-0 mt-2">
+                <span >Recents</span>
                 {% for post in object_list %}
-                    <div class="card mt-3">
+                    <div class="card mt-2 mb-3">
                         {% if post.image %}
                             <img class="card-img-top" src="{{ post.image.url }}" alt="Card image cap">
                         {% else %}
