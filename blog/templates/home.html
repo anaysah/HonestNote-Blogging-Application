@@ -5,6 +5,27 @@
     <div class="container-fluid corosel py-3">
         <div class="swiper mySwiper">
           <div class="swiper-wrapper">
+            {% for blog in featured_blogs %}
+            <div class="swiper-slide ">
+              <div class="slide-body post-entry d-lg-flex">
+                {% if blog.post.image %}
+                <div class="me-lg-4 thumbnail mb-4 mb-lg-0 col-lg-6">
+                  <img src="{{ blog.post.image.url }}" alt="" srcset="">
+                </div>
+                {% else %}
+                {% endif %}
+                <div class="align-self-center content">
+                  <div class="post-meta mb-3">
+                    <a href="{% url 'blogs_by_category' blog.post.category|slugify %}" class="category">{{ blog.post.category|title }}</a> —
+                    <span class="date">{{ blog.post.date|date:"F j, Y" }}</span>
+                  </div>
+                  <h2 class="heading"><strong><a href="{% url 'blogPage' blog.post.slug %}">{{ blog.post.title|title }}</a></strong></h2>
+                  <p>{{ blog.post.snippet }}</p>
+                  
+                </div>
+              </div>
+            </div>
+            {% endfor %}
             <div class="swiper-slide ">
               <div class="slide-body post-entry d-lg-flex">
                 <div class="me-lg-4 thumbnail mb-4 mb-lg-0 col-lg-6">
@@ -24,7 +45,7 @@
                 </div>
               </div>
             </div>
-            <div class="swiper-slide row"><div class="col">slide 2</div></div>
+            
           </div>
           {% comment %} <div class="swiper-button-next"></div> {% endcomment %}
           {% comment %} <div class="swiper-button-prev"></div> {% endcomment %}

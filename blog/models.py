@@ -61,6 +61,11 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('blogPage', args=(self.slug,))
 
+class FeaturedBlog(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    def __str__(self) -> str:
+        return self.post.title
+
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.PROTECT, related_name='comments')
     name = models.CharField(max_length=255)

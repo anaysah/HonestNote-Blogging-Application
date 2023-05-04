@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView , DetailView, CreateView, UpdateView, DeleteView
 from django.utils.safestring import SafeText
 from django.db.models import Q
-from .models import Post, Category
+from .models import Post, Category, FeaturedBlog
 from .forms import addBlogForm, editBlogForm, addCategoryForm
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -23,11 +23,15 @@ class homeView(ListView):
     model = Post
     template_name = 'home.html'
     ordering = ["-date"]
-    def get_context_data(self,*args, **kwargs):
-        allCategory = Category.objects.all()
-        context = super(homeView,self).get_context_data(*args,**kwargs)
-        context['allCategory'] = allCategory
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        all_categories = Category.objects.all()
+        featured_blogs = FeaturedBlog.objects.all()
+        context['allCategory'] = all_categories
+        context['featured_blogs'] = featured_blogs
         return context
+
 
 class SearchView(homeView):
     def get_queryset(self):
