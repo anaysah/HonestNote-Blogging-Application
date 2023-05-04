@@ -7,3 +7,8 @@
 .card a{
     font-family: "Poppins", sans-serif;
 }
+
+.category-body{
+    position: sticky;
+    top: 0;
+}
