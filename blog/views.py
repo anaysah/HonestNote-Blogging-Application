@@ -46,6 +46,11 @@ class BlogsByCategory(homeView):
         category_name = self.kwargs['category_name']
         self.category = Category.objects.get(name__iexact=category_name)
         return Post.objects.filter(category=self.category)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        del context['featured_blogs']
+        context['category_name'] = self.kwargs['category_name']
+        return context
 
 
 class blogPage(DetailView):
