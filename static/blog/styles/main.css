@@ -31,6 +31,8 @@
     --transition-props: var(--transition-func) var(--transition-time);
     --logo-color: white;
     --poppins: "Poppins", sans-serif;
+
+    --border-color: var(--bgColor);
 }
 
 .dark-theme {
@@ -38,6 +40,7 @@
     --fgColor: white;
     --textColor: rgb(38, 40, 80);
     --logo-color: var(--textColor);
+    --border-color: #dee2e6;
 }
 
 .text-color {

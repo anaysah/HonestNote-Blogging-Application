@@ -13,7 +13,9 @@
     background-color: var(--fgColor);
     padding: 2rem;
     border-radius: var(--main-radius);
+    font-family: "Poppins", sans-serif;
     /* width: fit-content; */
+    /* border-color: var(--border-color)!important; */
 }
 
 .blog-title {
@@ -24,3 +26,35 @@
     color: var(--textColor2);
     /* color: blueviolet; */
 }
+
+.comment-form{
+    font-family: var(--poppins);
+}
+
+.comment-form h4{
+    letter-spacing: .1rem;
+}
+
+.comment-form button{
+    padding: .5rem;
+    background-color: var(--bgColor);
+    border: none;
+    border-radius: var(--main-radius);
+    color: var(--textColor);
+}
+
+
+.comment-img-box{
+    /* height: 75px; */
+    /* width: 75px; */
+    /* overflow: hidden; */
+    
+
+}
+
+.comment-img-box img{
+    width: 4rem;
+    border-radius: 4rem;
+    border-color: var(--border-color)!important;
+}
+
