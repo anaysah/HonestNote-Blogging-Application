@@ -22,6 +22,30 @@
 </head>
 
 <body>
+  <div class="side-collapse-menu d-flex flex-column p-5" id="mySidenav">
+    <div class="side-menu-head d-flex justify-content-between">
+      <span class="d-flex align-items-center">Navigation</span>
+      <span onclick="toggleSideMenu()" class=""><i class="fa-solid fa-xmark fa-xl"></i></span>
+    </div>
+    <div class="side-menu-body">
+      <ul class="side-menu-wrap list-unstyled pt-1">
+        <li class="active"><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="#">Travel</a></li>
+        <li><a href="#">Food</a></li>
+        <li><a href="#">Technology</a></li>
+        <li><a href="#">Business</a></li>
+      </ul>
+      <p>Perspiciatis hic praesentium nesciunt. Et neque a dolorum <a href="#0">voluptatem</a> porro iusto sequi veritatis libero enim. Iusto id suscipit veritatis neque reprehenderit.</p>
+    </div>
+    <div>
+      <ul class="list-unstyled d-flex align-items-center gap-3 m-0">
+        <li><a href="#"><span class="icon-twitter"><i class="fa-brands fa-twitter"></i></span></a></li>
+        <li><a href="#"><span class="icon-facebook"><i class="fa-brands fa-facebook-f"></i></span></a></li>
+        <li><a href="#"><span class="icon-instagram"><i class="fa-brands fa-instagram"></i></span></a></li>
+
+      </ul>
+    </div>
+  </div>
   <div id="header">
     <div class="container-fluid header-box">
       <div class="row d-flex align-items-center">
@@ -54,7 +78,7 @@
               <span onclick="changeTheme()" class="changeTheme-btn">
                 <i class="fa-solid fa-circle-half-stroke fa-xl changeTheme-icon"></i>
               </span>
-              <span><i class="fa-solid fa-bars fa-xl"></i></span>
+              <span onclick="toggleSideMenu()"><i class="fa-solid fa-bars fa-xl"></i></span>
 
             </span>
 
@@ -64,7 +88,7 @@
     </div>
   </div>
 
-  
+
 
   <div class="main-body">
 

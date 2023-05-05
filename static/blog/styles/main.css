@@ -30,6 +30,7 @@
     --transition-time: 100ms;
     --transition-props: var(--transition-func) var(--transition-time);
     --logo-color: white;
+    --poppins: "Poppins", sans-serif;
 }
 
 .dark-theme {
@@ -110,7 +111,7 @@ body {
     height: 45vh;
     border-radius: 7px;
     overflow: hidden;
-    
+
 }
 
 .swiper {
@@ -128,7 +129,7 @@ body {
     justify-content: center;
     align-items: flex-start;
     /* max-width: var(--site-width); */
-    
+
 }
 
 .slide-body {
@@ -157,12 +158,42 @@ body {
 /* ----------end swiper */
 
 
+/* ------side moblie collapse menu */
+.side-collapse-menu {
+    width: 300px;
+    position: fixed;
+    right: 0;
+    z-index: 2000;
+    /* padding: 1rem 2rem; */
+    background: var(--bgColor);
+    height: calc(100vh);
+    transform: translateX(100%);
+    -webkit-transition: 0.8s all cubic-bezier(0.23, 1, 0.32, 1);
+    -o-transition: 0.8s all cubic-bezier(0.23, 1, 0.32, 1);
+    transition: 0.8s all cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.show-side-menu{
+    box-shadow: -10px 0 20px -10px rgba(0, 0, 0, 0.1);
+    -webkit-transform: translateX(0%);
+    -ms-transform: translateX(0%);
+    transform: translateX(0%);
+}
+
+.side-menu-wrap li{
+    line-height: 2rem;
+    font-family: var(--poppins);
+    /* font-size: 1.8rem; */
+    font-weight: bold;
+}
+
+/* ------side moblie collapse menu */
 
 
 
 
 
-a{
+a {
     text-decoration: none;
 }
 
