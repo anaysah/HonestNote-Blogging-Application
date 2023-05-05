@@ -37,9 +37,22 @@ class SearchView(homeView):
     def get_queryset(self):
         query = self.request.GET.get('query')
         if query:
+            try:
+                # Check if query is a category name
+                category = Category.objects.get(name__iexact=query)
+                return Post.objects.filter(category=category)
+            except Category.DoesNotExist:
+                pass
+            
             return Post.objects.filter(Q(title__icontains=query) | Q(body__icontains=query))
         else:
             return super().get_queryset()
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        del context['featured_blogs']
+        context['category_name'] = self.request.GET.get('query')
+        return context
+
         
 class BlogsByCategory(homeView):
     def get_queryset(self):
