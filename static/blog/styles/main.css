@@ -187,6 +187,27 @@ body {
     font-weight: bold;
 }
 
+.side-menu-wrap{
+    position: relative;
+    left: 50px;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.show-side-menu .side-menu-wrap{
+    opacity: 1;
+    visibility: visible;
+    -webkit-transition-property: all;
+    transition-property: all;
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+    -webkit-transition-timing-function: ease-in-out;
+    transition-timing-function: ease-in-out;
+    -webkit-transition-delay: 0.1s;
+    transition-delay: 0.1s;
+    left: 0;
+}
+
 /* ------side moblie collapse menu */
 
 
