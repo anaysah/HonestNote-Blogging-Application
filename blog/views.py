@@ -3,10 +3,11 @@ from django.views.generic import ListView , DetailView, CreateView, UpdateView, 
 from django.utils.safestring import SafeText
 from django.db.models import Q
 from .models import Post, Category, FeaturedBlog
-from .forms import addBlogForm, editBlogForm, addCategoryForm
+from .forms import addBlogForm, editBlogForm, addCategoryForm, CommentForm
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
+from django.views.generic.edit import FormMixin
 
 # def search_results(request):
 #     query = request.GET.get('query')
@@ -66,25 +67,29 @@ class BlogsByCategory(homeView):
         return context
 
 
-class blogPage(DetailView):
+class blogPage(FormMixin,DetailView):
     model = Post
     template_name = 'blogPage.html'
+    form_class = CommentForm
+    def get_success_url(self):
+        return reverse('blogPage', kwargs={'slug': self.get_object().slug}) + f"#comment_{self.comment.id}"
     def clean_body_html(self):
         body_html = self.cleaned_data['body']
         return SafeText(body_html)
-    def get_context_data(self,*args, **kwargs):
-        blog = get_object_or_404(Post, slug=self.kwargs['slug'])
-        totalLikes = blog.total_likes()
-        allCategory = Category.objects.all()
-        liked = False
-        if blog.likes.filter(id=self.request.user.id).exists():
-            liked = True
-
-        context = super(blogPage,self).get_context_data(*args,**kwargs)
-        context['allCategory'] = allCategory
-        context['totalLikes'] = totalLikes
-        context['liked'] = liked
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = self.form_class()
         return context
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = self.get_object()
+            comment.save()
+            self.comment = comment
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form) 
 
 def likeBlog(req,slug):
     blog = get_object_or_404(Post, slug=slug)
