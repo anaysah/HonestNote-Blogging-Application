@@ -1,107 +1,132 @@
 {% extends 'main.html' %}
 {% load static %}
 {% block content %}
-    <link rel="stylesheet" href="{% static 'blog/styles/home.css' %}">
-    {% if featured_blogs %}
+  <link rel="stylesheet" href="{% static 'blog/styles/home.css' %}">
+  {% if featured_blogs %}
     <div class="container-fluid corosel py-3">
-        <div class="swiper mySwiper">
-          <div class="swiper-wrapper">
-            {% for blog in featured_blogs %}
+      <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+          {% for blog in featured_blogs %}
             <div class="swiper-slide ">
               <div class="slide-body post-entry d-lg-flex">
                 {% if blog.post.image %}
-                <div class="me-lg-4 thumbnail mb-4 mb-lg-0 col-lg-6">
-                  <img src="{{ blog.post.image.url }}" alt="" srcset="">
-                </div>
+                  <div class="me-lg-4 thumbnail mb-4 mb-lg-0 col-lg-6">
+                    <img src="{{ blog.post.image.url }}" alt="" srcset="">
+                  </div>
                 {% else %}
                 {% endif %}
                 <div class="align-self-center content">
                   <div class="post-meta mb-3">
-                    <a href="{% url 'blogs_by_category' blog.post.category|slugify %}" class="category">{{ blog.post.category|title }}</a> —
+                    <a href="{% url 'blogs_by_category' blog.post.category|slugify %}"
+                       class="category">{{ blog.post.category|title }}</a> —
                     <span class="date">{{ blog.post.date|date:"F j, Y" }}</span>
                   </div>
-                  <h2 class="heading"><strong><a href="{% url 'blogPage' blog.post.slug %}">{{ blog.post.title|title }}</a></strong></h2>
+                  <h2 class="heading">
+                    <strong><a href="{% url 'blogPage' blog.post.slug %}">{{ blog.post.title|title }}</a></strong>
+                  </h2>
                   <p>{{ blog.post.snippet }}</p>
-                  
                 </div>
               </div>
             </div>
-            {% endfor %}
-            <div class="swiper-slide ">
-              <div class="slide-body post-entry d-lg-flex">
-                <div class="me-lg-4 thumbnail mb-4 mb-lg-0 col-lg-6">
-                  <img src="https://i.ibb.co/7Ycwd45/image.png" alt="" srcset="">
+          {% endfor %}
+          <div class="swiper-slide ">
+            <div class="slide-body post-entry d-lg-flex">
+              <div class="me-lg-4 thumbnail mb-4 mb-lg-0 col-lg-6">
+                <img src="https://i.ibb.co/7Ycwd45/image.png" alt="" srcset="">
+              </div>
+              <div class="align-self-center content">
+                <div class="post-meta mb-3">
+                  <a href="#" class="category">Business</a>, <a href="#" class="category">Travel</a> —
+                  <span class="date">July 2, 2020</span>
                 </div>
-                <div class="align-self-center content">
-                  <div class="post-meta mb-3">
-                    <a href="#" class="category">Business</a>, <a href="#" class="category">Travel</a> —
-                    <span class="date">July 2, 2020</span>
-                  </div>
-                  <h2 class="heading"><strong><a href="single.html">Your most unhappy customers are your greatest source of
-                        learning.</a></strong></h2>
-                  <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the
-                    blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language
-                    ocean.</p>
-                  
-                </div>
+                <h2 class="heading">
+                  <strong><a href="single.html">Your most unhappy customers are your greatest source of
+                  learning.</a></strong>
+                </h2>
+                <p>
+                  Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the
+                  blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language
+                  ocean.
+                </p>
               </div>
             </div>
-            
           </div>
-          {% comment %} <div class="swiper-button-next"></div> {% endcomment %}
-          {% comment %} <div class="swiper-button-prev"></div> {% endcomment %}
-          <div class="swiper-pagination"></div>
         </div>
+        {% comment %} <div class="swiper-button-next"></div> {% endcomment %}
+        {% comment %} <div class="swiper-button-prev"></div> {% endcomment %}
+        <div class="swiper-pagination"></div>
       </div>
-      {% else %}
-      <div class="row justify-content-center m-2 mt-4">
-        <div class="col-lg-7 text-center d-flex justify-content-center align-items-center gap-4">
+    </div>
+  {% else %}
+    <div class="row justify-content-center m-2 mt-4">
+      <div class="col-lg-7 text-center d-flex justify-content-center align-items-center gap-4">
+        {% if category_name %}
           <i class="fa-solid fa-magnifying-glass fa-xl"></i>
           <h2 class="category-name">{{ category_name }}</h2>
-        </div>
-        </div>
-      {% endif %}
-    <div class="container-fluid ">
-        <div class="row  mb-3">
-            <div class="col-0 col-lg-2 d-flex flex-column" id="category-body">
-              <div class="category-body">
-                <span>Categories</span>
-                <div class="d-flex flex-lg-column flex-wrap container-fluid p-0 gap-2 mt-2">
-                    {% for category in allCategory %}
-                        <span class="category-box">
-                            <a href="{% url 'blogs_by_category' category %}"
-                               class="d-flex align-items-baseline gap-2"><i class="fa-solid {{ category.icon_class_name }} fa-sm"></i><span>{{ category|title }}</span></a>
-                        </span>
-                    {% endfor %}
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-8 mt-lg-0 mt-2">
-                <span >Recents</span>
-                {% for post in object_list %}
-                    <div class="card mt-2 mb-3">
-                        {% if post.image %}
-                            <img class="card-img-top" src="{{ post.image.url }}" alt="Card image cap">
-                        {% else %}
-                        {% endif %}
-                        <div class="card-body">
-                            <small><strong><a href="{% url 'blogs_by_category' post.category|slugify %}">{{ post.category|title }}</a></strong></small>
-                            
-                            <h4 class="card-title">
-                                <strong>
-                                <a href="{% url 'blogPage' post.slug %}">{{ post.title|title }}</a>
-                            </strong>
-                            </h4>
-                            
-                            <p class="card-text">{{ post.snippet }}</p>
-                            <p class="card-text row">
-                                <small class=" col text-color">{{ post.date|date:"F j, Y" }}</small>
-                                <small class=" col text-color" align="right">{{ post.author.get_full_name }}</small>
-                            </p>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
+        {% elif page_obj.has_previous %}
+          <h2 class="category-name">Page No. {{ page_obj.number }}</h2>
+        {% endif %}
+      </div>
     </div>
+  {% endif %}
+  <div class="container-fluid ">
+    <div class="row  mb-3">
+      <div class="col-0 col-lg-2 d-flex flex-column" id="category-body">
+        <div class="category-body">
+          <span>Categories</span>
+          <div class="d-flex flex-lg-column flex-wrap container-fluid p-0 gap-2 mt-2">
+            {% for category in allCategory %}
+              <span class="category-box">
+                <a href="{% url 'blogs_by_category' category %}"
+                   class="d-flex align-items-baseline gap-2"><i class="fa-solid {{ category.icon_class_name }} fa-sm"></i><span>{{ category|title }}</span></a>
+              </span>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8 mt-lg-0 mt-2">
+        <span >Recents</span>
+        {% for post in object_list %}
+          <div class="card mt-2 mb-3">
+            {% if post.image %}
+              <img class="card-img-top" src="{{ post.image.url }}" alt="Card image cap">
+            {% else %}
+            {% endif %}
+            <div class="card-body">
+              <small><strong><a href="{% url 'blogs_by_category' post.category|slugify %}">{{ post.category|title }}</a></strong></small>
+              <h4 class="card-title">
+                <strong>
+                  <a href="{% url 'blogPage' post.slug %}">{{ post.title|title }}</a>
+                </strong>
+              </h4>
+              <p class="card-text">{{ post.snippet }}</p>
+              <p class="card-text row">
+                <small class=" col text-color">{{ post.date|date:"F j, Y" }}</small>
+                <small class=" col text-color" align="right">{{ post.author.get_full_name }}</small>
+              </p>
+            </div>
+          </div>
+        {% endfor %}
+        <div class="pagination d-felx justify-content-center align-items-center">
+          <span class="step-links d-flex justify-content alilg-items card flex-row">
+            {% if page_obj.has_previous %}
+              <a href="?page=1"><i class="fa-solid fa-angles-left"></i> <span>first</span></a>
+              <a href="?page={{ page_obj.previous_page_number }}"><i class="fa-solid fa-angle-left"></i></a>
+            {% else %}
+              <a href="#" disabled><i class="fa-solid fa-angles-left"></i> <span>first</span></a>
+              <a href="#"><i class="fa-solid fa-angle-left"></i></a>
+            {% endif %}
+            <span class="current">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</span>
+            {% if page_obj.has_next %}
+              <a href="?page={{ page_obj.next_page_number }}"><i class="fa-solid fa-angle-right"></i></a>
+              <a href="?page={{ page_obj.paginator.num_pages }}"><span>last</span> <i class="fa-solid fa-angles-right"></i></a>
+            {% else %}
+              <a href="#"><i class="fa-solid fa-angle-right"></i></a>
+              <a href="#"><span>last</span> <i class="fa-solid fa-angles-right"></i></a>
+            {% endif %}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock content %}

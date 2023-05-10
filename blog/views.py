@@ -8,6 +8,7 @@ from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.views.generic.edit import FormMixin
+from django.core.paginator import Paginator
 
 # def search_results(request):
 #     query = request.GET.get('query')
@@ -24,13 +25,19 @@ class homeView(ListView):
     model = Post
     template_name = 'home.html'
     ordering = ["-date"]
+    paginate_by = 3
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         all_categories = Category.objects.all()
-        featured_blogs = FeaturedBlog.objects.all()
         context['allCategory'] = all_categories
-        context['featured_blogs'] = featured_blogs
+
+        # Check if page number is 1 or not present in URL
+        page = self.request.GET.get('page')
+        if page is None or page == '1':
+            featured_blogs = FeaturedBlog.objects.all()
+            context['featured_blogs'] = featured_blogs
+
         return context
 
 

@@ -19,3 +19,26 @@
     font-weight: 700;
     letter-spacing: .1rem;
 }
+
+.pagination .step-links{
+    gap:.2rem;
+    overflow: hidden;
+
+}
+
+.step-links > *{
+    border-right: 1px var(--bgColor) solid;
+    padding: 0.2rem 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.step-links> :first-child, .step-links>:last-child{
+    /* background-color: white; */
+    gap: .5rem;
+}
+
+.step-links> :last-child{
+    border: none;
+}
