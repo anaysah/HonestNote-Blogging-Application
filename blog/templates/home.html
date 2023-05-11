@@ -9,11 +9,14 @@
           {% for blog in featured_blogs %}
             <div class="swiper-slide ">
               <div class="slide-body post-entry d-lg-flex">
-                {% if blog.post.image %}
+                {% if blog.post.image_url %}
                   <div class="me-lg-4 thumbnail mb-4 mb-lg-0 col-lg-6">
-                    <img src="{{ blog.post.image.url }}" alt="" srcset="">
+                    <img src="{{ blog.post.image_url }}" alt="" srcset="">
                   </div>
-                {% else %}
+                {% elif blog.post.image %}
+                <div class="me-lg-4 thumbnail mb-4 mb-lg-0 col-lg-6">
+                  <img src="{{ blog.post.image.url }}" alt="" srcset="">
+                </div>
                 {% endif %}
                 <div class="align-self-center content">
                   <div class="post-meta mb-3">
@@ -88,9 +91,10 @@
         <span >Recents</span>
         {% for post in object_list %}
           <div class="card mt-2 mb-3">
-            {% if post.image %}
-              <img class="card-img-top" src="{{ post.image.url }}" alt="Card image cap">
-            {% else %}
+            {% if post.image_url %}
+              <img class="card-img-top" src="{{ post.image_url }}" alt="Card image cap">
+            {% elif post.image %}
+            <img class="card-img-top" src="{{ post.image.url }}" alt="Card image cap">
             {% endif %}
             <div class="card-body">
               <small><strong><a href="{% url 'blogs_by_category' post.category|slugify %}">{{ post.category|title }}</a></strong></small>

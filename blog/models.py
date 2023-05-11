@@ -40,6 +40,7 @@ class Post(models.Model):
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
     # image = models.ImageField(blank=True, null=True, upload_to="images")
     image = models.ImageField(upload_to=get_image_filename, blank=True, null=True)
+    image_url = models.URLField(blank=True)
     # body = models.TextField()
     snippet = models.CharField(max_length=255)
     body = RichTextField(blank=True, null=True)
