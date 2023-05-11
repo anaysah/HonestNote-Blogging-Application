@@ -25,24 +25,29 @@ class Category(models.Model):
     def get_absolute_url(self):
         return reverse('home')
 
-
-
-
+def get_image_filename(instance, filename):
+    """Return the filename for the uploaded image."""
+    ext = filename.split('.')[-1]
+    # Generate a unique slug from the Post title
+    slug = instance.slug
+    # Construct the file path and name
+    file_path = f'images/blogThumbnail/{slug}.{ext}'
+    return file_path
 
 class Post(models.Model):
     title = models.CharField(max_length=255)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
-    image = models.ImageField(blank=True, null=True, upload_to="images")
+    # image = models.ImageField(blank=True, null=True, upload_to="images")
+    image = models.ImageField(upload_to=get_image_filename, blank=True, null=True)
     # body = models.TextField()
     snippet = models.CharField(max_length=255)
     body = RichTextField(blank=True, null=True)
     slug = models.SlugField(unique=True, blank=True, default="Awsome blog")
     date = models.DateTimeField(auto_now_add=True)
-    likes = models.ManyToManyField(User, related_name="blog_post")
+    # likes = models.ManyToManyField(User, related_name="blog_post")
     
-    def total_likes(self):
-        return self.likes.count()
+    
 
     def __str__(self) -> str:
         return self.title + "|" + str(self.author)
