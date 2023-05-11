@@ -82,6 +82,14 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
+    # 'default': {
+    #     'ENGINE': "django.db.backends.postgresql_psycopg2",
+    #     'HOST': "db.lonrmmupieaujiybsech.supabase.co",
+    #     'NAME': "postgres",
+    #     'USER': "postgres",
+    #     'PASSWORD': "bER8WoYHrIniDp0Y",
+    #     'PORT': "5432",
+    # }
 }
 
 
