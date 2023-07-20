@@ -31,7 +31,7 @@ def get_image_filename(instance, filename):
     # Generate a unique slug from the Post title
     slug = instance.slug
     # Construct the file path and name
-    file_path = f'images/blogThumbnail/{slug}.{ext}'
+    file_path = f'images/blogs/{slug}/thumbnail.{ext}'
     return file_path
 
 class Post(models.Model):

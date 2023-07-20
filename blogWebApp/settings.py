@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'authen',
     'ckeditor',
     'fontawesomefree',
+    'cloudinary_storage',
+    'cloudinary',
+    
 ]
 
 MIDDLEWARE = [
@@ -95,6 +98,12 @@ DATABASES = {
     }
 }
 
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dznklkrvz',
+    'API_KEY': '742231279217474',
+    'API_SECRET': '_2zby-moloIBc3lKlbmIR5mxAQs'
+}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -131,7 +140,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = '/staticfiles/'
-MEDIA_URL = 'media/'
+MEDIA_URL = '/media/'
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 from os import path
 

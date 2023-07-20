@@ -24,3 +24,4 @@ secret_key.txt
 
 task.txt
 staticfiles/
+media/
