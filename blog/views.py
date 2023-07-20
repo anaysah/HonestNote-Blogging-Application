@@ -98,48 +98,48 @@ class blogPage(FormMixin,DetailView):
         else:
             return self.form_invalid(form) 
 
-def likeBlog(req,slug):
-    blog = get_object_or_404(Post, slug=slug)
-    user_id = req.user.id
-    if blog.likes.filter(id=user_id).exists():
-        blog.likes.remove(req.user)
-    else:
-        blog.likes.add(req.user)
-    return HttpResponseRedirect(reverse('blogPage',args=[slug]))
+# def likeBlog(req,slug):
+#     blog = get_object_or_404(Post, slug=slug)
+#     user_id = req.user.id
+#     if blog.likes.filter(id=user_id).exists():
+#         blog.likes.remove(req.user)
+#     else:
+#         blog.likes.add(req.user)
+#     return HttpResponseRedirect(reverse('blogPage',args=[slug]))
 
 
-class addBlog(LoginRequiredMixin, CreateView):
-    model = Post
-    form_class = addBlogForm
-    template_name = 'addBlog.html'
-    login_url = 'home'
-    # fields = '__all__'
-    # fields = ('title','body')
+# class addBlog(LoginRequiredMixin, CreateView):
+#     model = Post
+#     form_class = addBlogForm
+#     template_name = 'addBlog.html'
+#     login_url = 'home'
+#     # fields = '__all__'
+#     # fields = ('title','body')
     
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        return super().form_valid(form)
+#     def form_valid(self, form):
+#         form.instance.author = self.request.user
+#         return super().form_valid(form)
     
-    def get_initial(self):
-        initial = super().get_initial()
-        initial['author'] = self.request.user
-        initial['AuthorName'] = self.request.user.username
-        return initial
+#     def get_initial(self):
+#         initial = super().get_initial()
+#         initial['author'] = self.request.user
+#         initial['AuthorName'] = self.request.user.username
+#         return initial
 
-class editBlog(UpdateView):
-    model = Post
-    form_class = editBlogForm
-    template_name = 'editBlog.html'
+# class editBlog(UpdateView):
+#     model = Post
+#     form_class = editBlogForm
+#     template_name = 'editBlog.html'
 
-class deleteBlog(DeleteView):
-    model = Post
-    template_name = 'deleteBlog.html'
-    success_url = reverse_lazy('home')
+# class deleteBlog(DeleteView):
+#     model = Post
+#     template_name = 'deleteBlog.html'
+#     success_url = reverse_lazy('home')
 
-class addCategory(CreateView):
-    model = Category
-    form_class = addCategoryForm
-    template_name = 'addCategory.html'
+# class addCategory(CreateView):
+#     model = Category
+#     form_class = addCategoryForm
+#     template_name = 'addCategory.html'
 
 # def allBlogCategory(req, cats):
 #     try:

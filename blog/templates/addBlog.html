@@ -1,24 +1,21 @@
-{% extends 'main.html' %}
-{% block title %}
-    Add Post
-{% endblock title %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
 
-{% if user.is_authenticated %}
-
-<h1>Add Post</h1>
-<div class="form-group">
-    <form action="" method="post" enctype="multipart/form-data">
+<body>
+    <!-- upload.html -->
+    <form id="file-upload-form" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.media }}
-        {{ form.as_p }}
-        <button class="btn btn-primary">Add Blog</button>
+        <input type="file" name="file" id="file-input">
+        <button type="submit">Upload</button>
     </form>
-</div>
+    <div id="upload-result"></div>
 
-{% else %}
-<span>please login in first</span>
-{% endif %}
+</body>
 
-{% endblock content %}
+</html>

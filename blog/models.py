@@ -38,18 +38,13 @@ class Post(models.Model):
     title = models.CharField(max_length=255)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
-    # image = models.ImageField(blank=True, null=True, upload_to="images")
     image = models.ImageField(upload_to=get_image_filename, blank=True, null=True)
     image_url = models.URLField(blank=True)
-    # body = models.TextField()
     snippet = models.CharField(max_length=255)
     body = RichTextField(blank=True, null=True)
     slug = models.SlugField(unique=True, blank=True, default="Awsome blog")
     date = models.DateTimeField(auto_now_add=True)
-    # likes = models.ManyToManyField(User, related_name="blog_post")
     
-    
-
     def __str__(self) -> str:
         return self.title + "|" + str(self.author)
     
