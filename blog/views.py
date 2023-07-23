@@ -3,7 +3,7 @@ from django.views.generic import ListView , DetailView, CreateView, UpdateView, 
 from django.utils.safestring import SafeText
 from django.db.models import Q
 from .models import Post, Category, FeaturedBlog
-from .forms import addBlogForm, editBlogForm, addCategoryForm, CommentForm
+from .forms import  CommentForm
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
@@ -23,7 +23,7 @@ from django.core.paginator import Paginator
 
 class homeView(ListView):
     model = Post
-    template_name = 'home.html'
+    template_name = 'blog/home.html'
     ordering = ["-date"]
     paginate_by = 3
 
@@ -76,7 +76,7 @@ class BlogsByCategory(homeView):
 
 class blogPage(FormMixin,DetailView):
     model = Post
-    template_name = 'blogPage.html'
+    template_name = 'blog/blogPage.html'
     form_class = CommentForm
     def get_success_url(self):
         return reverse('blogPage', kwargs={'slug': self.get_object().slug}) + f"#comment_{self.comment.id}"

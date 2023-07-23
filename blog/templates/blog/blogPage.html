@@ -1,4 +1,4 @@
-{% extends 'main.html' %}
+{% extends 'blog/main.html' %}
 {% block title %}
   {{ post.slug |title }}
 {% endblock title %}
@@ -17,10 +17,10 @@
         <h2 class="heading blog-title">{{ post.title | title }}</h2>
         <p class="lead mb-4 ">{{ post.snippet }}</p>
 
-        {% if post.image_url %}
-          <img class="img-fluid rounded mb-4" src="{{ post.image_url }}" alt="Card image cap">
-        {% elif post.image %}
-          <img class="img-fluid rounded mb-4" src="{{ post.image.url }}" alt="Card image cap">
+        {% if post.thumbnail_url %}
+          <img class="img-fluid rounded mb-4" src="{{ post.thumbnail_url }}" alt="Card image cap">
+        {% elif post.thumbnail %}
+          <img class="img-fluid rounded mb-4" src="{{ post.thumbnail.url }}" alt="Card image cap">
         {% endif %}
 
         {{ post.body|safe }}

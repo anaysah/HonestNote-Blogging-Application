@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from datetime import datetime, date
 from ckeditor.fields import RichTextField
-import os
+
 
 
 class Profile(models.Model):
@@ -38,8 +38,8 @@ class Post(models.Model):
     title = models.CharField(max_length=255)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
-    image = models.ImageField(upload_to=get_image_filename, blank=True, null=True)
-    image_url = models.URLField(blank=True)
+    thumbnail = models.ImageField(upload_to=get_image_filename, blank=True, null=True)
+    thumbnail_url = models.URLField(blank=True)
     snippet = models.CharField(max_length=255)
     body = RichTextField(blank=True, null=True)
     slug = models.SlugField(unique=True, blank=True, default="Awsome blog")
