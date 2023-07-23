@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     # 'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'blog',
-    # 'authen',
+    'dashboard',
+    
     'ckeditor',
     'fontawesomefree',
     'cloudinary_storage',

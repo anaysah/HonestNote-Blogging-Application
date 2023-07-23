@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Dashboard{% endblock %}</title>
+
+</head>
+
+<body>
+    <div class="center">
+        <form method="post" class="card" novalidate>
+            {% csrf_token %}
+            <h2 class="text-center">Log in to your account</h2>
+            {% for field in form %}
+            {{ field.label_tag }}
+            {{ field }}
+
+            {% endfor %}
+
+            <input type="submit" value="Login" class="btn btn-primary full-width">
+            <hr>
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                {{ message }}
+                {% endfor %}
+            </ul>
+            {% endif %}
+            <p class="text-center">Forgot your password <a href="#">Reset Password</a></p>
+        </form>
+    </div>
+
+</body>
+
+</html>
