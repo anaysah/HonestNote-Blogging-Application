@@ -29,21 +29,22 @@ def get_image_filename(instance, filename):
     """Return the filename for the uploaded image."""
     ext = filename.split('.')[-1]
     # Generate a unique slug from the Post title
-    slug = instance.slug
+    pk = instance.pk
     # Construct the file path and name
-    file_path = f'images/blogs/{slug}/thumbnail.{ext}'
+    file_path = f'images/blogs/blog_{pk}/thumbnail.{ext}'
     return file_path
 
 class Post(models.Model):
     title = models.CharField(max_length=255)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    category = models.ForeignKey(Category, on_delete=models.PROTECT)
+    category = models.ForeignKey(Category, on_delete=models.PROTECT, null=True)
     thumbnail = models.ImageField(upload_to=get_image_filename, blank=True, null=True)
     thumbnail_url = models.URLField(blank=True)
     snippet = models.CharField(max_length=255)
     body = RichTextField(blank=True, null=True)
-    slug = models.SlugField(unique=True, blank=True, default="Awsome blog")
+    slug = models.SlugField(unique=True)
     date = models.DateTimeField(auto_now_add=True)
+    is_draft = models.BooleanField(default=True)
     
     def __str__(self) -> str:
         return self.title + "|" + str(self.author)
