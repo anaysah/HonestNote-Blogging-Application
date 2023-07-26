@@ -81,4 +81,19 @@ class EditBlogView(LoginRequiredMixin, UpdateView):
             post.slug = new_slug
 
         return super().form_valid(form)
-        
+
+
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+@require_POST
+def update_is_Draft(request):
+    post_id = request.POST.get('post_id')
+    is_draft = request.POST.get('is_draft') == 'true'
+
+    try:
+        post = Post.objects.get(pk=post_id)
+        post.is_draft = is_draft
+        post.save()
+        return JsonResponse({'status': 'success', 'is_draft': post.is_draft})
+    except Post.DoesNotExist:
+        return JsonResponse({'status': 'error', 'message': 'Post not found'})

@@ -27,6 +27,11 @@ class homeView(ListView):
     ordering = ["-date"]
     paginate_by = 3
 
+    def get_queryset(self):
+        # Only show non-drafted posts
+        queryset = super().get_queryset()
+        return queryset.filter(is_draft=False)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         all_categories = Category.objects.all()
