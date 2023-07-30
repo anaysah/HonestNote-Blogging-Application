@@ -28,9 +28,7 @@ class Category(models.Model):
 def get_image_filename(instance, filename):
     """Return the filename for the uploaded image."""
     ext = filename.split('.')[-1]
-    # Generate a unique slug from the Post title
     pk = instance.pk
-    # Construct the file path and name
     file_path = f'images/blogs/blog_{pk}/thumbnail.{ext}'
     return file_path
 
@@ -65,3 +63,17 @@ class Comment(models.Model):
 
     def __str__(self) -> str:
         return f'{self.post.title} - {self.name}'
+
+def image_upload_folder(instance, filename):#this is of no use. i will fix this later
+    """Return the filename for the uploaded image."""
+    ext = filename.split('.')[-1]
+    pk = instance.post.pk
+    file_path = f'images/blogs/blog_{pk}/thumbnail.{ext}'
+    return file_path
+
+class Image(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, null=True, related_name='images')
+    public_id = models.CharField(max_length=100)
+
+    def __str__(self):
+        return str(self.image)

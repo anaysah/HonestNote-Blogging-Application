@@ -1,6 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        img{
+            border:2px black solid;
+            border-radius:5px;
+            height: 120px;
+        }
+    </style>
+</head>
+<body>
+    
+
+
 <form action="" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.media }}
     {{ form.as_p }}
     <input type="submit" value="Save">
 </form>
+
+<div id="message"></div>
+
+<h1>Image Upload</h1>
+
+{% load cloudinary %}
+<div id="all-images">
+    {% for image in post.images.all %}
+    <div>
+        {% cloudinary image.public_id height=120 %}
+        <button class="delete-image-btn" onclick="deleteImage(this,'{{ image.pk }}', '{{ post.pk }}')">delete</button>
+        <button  class="copy-image-url" onclick="copyImageUrl('{% cloudinary_url image.public_id %}')">< ></button>
+    </div>
+    {% endfor %}
+</div>
+
+<form id="postForm" enctype="multipart/form-data">
+    <!-- Other fields for the post (e.g., title, content) -->
+    <input type="file" name="images" multiple>
+    <input type="hidden" name="post_id" value="{{ post.pk }}">
+    <button type="submit">Add image</button>
+</form>
+
+<script>
+    function isResponseOk(response){
+        if (!response.ok) {
+            return response.json()
+            .then(data => {
+                let errorMessage = data.message || response.statusText;
+                throw new Error(errorMessage);
+            });
+        }
+        return response.json();
+    }
+
+    function deleteImage(button,imageId, postId){
+        const data = new URLSearchParams();
+        data.append('image_id', imageId);
+        data.append('post_id', postId);
+
+        fetch("{% url 'delete_image' %}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRFToken': '{{ csrf_token }}',  // Replace with the actual CSRF token
+            },
+            body: data,
+        })
+        .then(response => isResponseOk(response))
+        .then(data => {
+            // if (data.status === 'success') {
+            console.log(data.message);  // Success message
+            const parentDiv = button.parentNode; // or childButton.parentElement
+            parentDiv.remove();
+            // } else {
+                // console.error(data.message);  // Error message
+            // }
+        })
+        .catch(error => {
+            console.error('AJAX error:', error.message);
+        });
+    }
+    
+    //-----------------------------------------------------------------
+    function copyImageUrl(secureUrl){
+        navigator.clipboard.writeText(secureUrl)
+        .then(() => alert("Image URL copied to clipboard!"))
+        .catch((error) => console.error("Failed to copy image URL: ", error));
+    }
+    //--------------------------------------------------------------------
+
+
+    //-----------------------------------------------------
+    function createDeleteBtn(imagePk, postPk){
+        const deleteButton = document.createElement("button");
+        deleteButton.className = "delete-image-btn";
+        deleteButton.textContent = "delete";
+        deleteButton.onclick = () => deleteImage(deleteButton,imagePk, postPk);
+        return deleteButton
+    }
+    function createImg(secureUrl){
+        const img = document.createElement('img');
+        img.src = secureUrl;
+        return img;
+    }
+
+    function createCopyBtn(secureUrl){
+        const copyButton = document.createElement("button");
+        copyButton.className = "copy-image-url";
+        copyButton.textContent = "< >";
+        // copyButton.onClick = `copyImageUrl(${secureUrl})`        
+        copyButton.onclick = () => copyImageUrl(secureUrl);
+        return copyButton;
+    }
+
+    const postForm = document.getElementById('postForm'); //post means blog = blogForm = the form used to fill the blog details
+    const messageDiv = document.getElementById('message');
+    
+    postForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const formData = new FormData(postForm);
+        fetch("{% url 'upload_image' %}", {
+            method: 'POST',
+            headers: { 'X-CSRFToken': '{{ csrf_token }}', },
+            body: formData,
+        })
+        .then(response => isResponseOk(response))
+        .then(data => {
+            messageDiv.innerText = data.message;
+            data.uploaded_images_data.forEach(obj=>{
+                const imagesContainer = document.getElementById("all-images");
+                
+                var deleteButton = createDeleteBtn(obj.image_pk, obj.post_pk);
+                var img = createImg(obj.secure_url)
+                var copyButton = createCopyBtn(obj.secure_url)
+
+                var imageContainer = document.createElement('div');
+                imagesContainer.appendChild(imageContainer);
+
+                imageContainer.appendChild(img);
+                imageContainer.appendChild(deleteButton);
+                imageContainer.appendChild(copyButton);
+            })
+        }).catch(error => {
+            console.error('AJAX error:', error.message);
+        });
+    });
+    //-----------------------------------------------------------
+
+</script>
+
+</body>
+</html>

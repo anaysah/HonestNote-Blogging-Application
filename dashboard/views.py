@@ -4,16 +4,14 @@ from django.views.generic import ListView, FormView, TemplateView
 from django.views.generic.edit import CreateView, UpdateView
 from django.urls import reverse_lazy
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
-from blog.models import Post
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.utils.text import slugify
 from django.shortcuts import redirect
-from django.views.generic import View
 from django.db import IntegrityError
 
 from django import forms
-from blog.models import Post
+from blog.models import Post, Image
 from ckeditor.widgets import CKEditorWidget
 
 
@@ -63,13 +61,20 @@ class PostForm(forms.ModelForm):
             'body': CKEditorWidget(),
         }
 
-class EditBlogView(LoginRequiredMixin, UpdateView):
+class EditBlogView(LoginRequiredMixin, UserPassesTestMixin, UpdateView ):
     model = Post
     form_class = PostForm
     template_name = 'dashboard/editBlog.html'
     context_object_name = 'post'
     pk_url_kwarg = 'pk'
 
+
+    def test_func(self):
+        post = self.get_object()
+        # Check if the current user is the author of the post
+        #so user cant able to change other post
+        return self.request.user == post.author
+    
     def form_valid(self, form):
         post = form.instance
         if form.has_changed() and 'title' in form.changed_data:
@@ -83,17 +88,3 @@ class EditBlogView(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
 
-from django.http import JsonResponse
-from django.views.decorators.http import require_POST
-@require_POST
-def update_is_Draft(request):
-    post_id = request.POST.get('post_id')
-    is_draft = request.POST.get('is_draft') == 'true'
-
-    try:
-        post = Post.objects.get(pk=post_id)
-        post.is_draft = is_draft
-        post.save()
-        return JsonResponse({'status': 'success', 'is_draft': post.is_draft})
-    except Post.DoesNotExist:
-        return JsonResponse({'status': 'error', 'message': 'Post not found'})

@@ -105,6 +105,10 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': '_2zby-moloIBc3lKlbmIR5mxAQs'
 }
 
+import cloudinary
+cloudinary.config(cloud_name='dznklkrvz',
+                  api_key='742231279217474',
+                  api_secret='_2zby-moloIBc3lKlbmIR5mxAQs')
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
