@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 from datetime import datetime, date
-from ckeditor.fields import RichTextField
 
 
 
@@ -39,7 +38,7 @@ class Post(models.Model):
     thumbnail = models.ImageField(upload_to=get_image_filename, blank=True, null=True)
     thumbnail_url = models.URLField(blank=True)
     snippet = models.CharField(max_length=255)
-    body = RichTextField(blank=True, null=True)
+    body = models.TextField(blank=True, null=True)
     slug = models.SlugField(unique=True)
     date = models.DateTimeField(auto_now_add=True)
     is_draft = models.BooleanField(default=True)

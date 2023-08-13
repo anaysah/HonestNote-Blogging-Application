@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'blog',
     'dashboard',
     
-    'ckeditor',
+    # 'ckeditor',
     'fontawesomefree',
     'cloudinary_storage',
     'cloudinary',

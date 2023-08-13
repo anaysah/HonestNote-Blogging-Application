@@ -18,6 +18,10 @@
     /* border-color: var(--border-color)!important; */
 }
 
+.main-body-box>figure>img {
+    width: 100%;
+}
+
 .blog-title {
 
     font-weight: 700;

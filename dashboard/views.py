@@ -12,7 +12,7 @@ from django.db import IntegrityError
 
 from django import forms
 from blog.models import Post, Image
-from ckeditor.widgets import CKEditorWidget
+# from ckeditor.widgets import CKEditorWidget
 
 
 class DashboardLoginView(LoginView):
@@ -57,9 +57,7 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ['title', 'category', 'thumbnail', 'thumbnail_url', 'snippet', 'body', 'is_draft']
-        widgets = {
-            'body': CKEditorWidget(),
-        }
+        
 
 class EditBlogView(LoginRequiredMixin, UserPassesTestMixin, UpdateView ):
     model = Post
@@ -87,4 +85,5 @@ class EditBlogView(LoginRequiredMixin, UserPassesTestMixin, UpdateView ):
 
         return super().form_valid(form)
 
-
+class ckeditorView(LoginRequiredMixin,TemplateView):
+    template_name = "dashboard/ckeditor.html"

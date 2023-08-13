@@ -26,7 +26,7 @@ def update_is_Draft(request):
     
 @require_POST
 def upload_image(request):
-    images = request.FILES.getlist('images')
+    images = request.FILES.getlist('upload')
     post_id = int(request.POST.get('post_id', 0))
 
     try:
@@ -52,7 +52,7 @@ def upload_image(request):
         try:
             result = cloudinary.uploader.upload(image, folder=folder_name)
         except Exception as e:
-            return JsonResponse({'message': f'server failed to upload image'}, status=500)
+            return JsonResponse({'message': f'media server problem {e}'}, status=500)
 
 
         if 'public_id' in result:
