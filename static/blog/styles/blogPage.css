@@ -2,20 +2,28 @@
     width: 70px;
 }
 
-.main-body-container {
+/* .main-body-container {
     padding-top: 1.5rem;
     font-family: "Poppins", sans-serif;
     color: var(--pColor);
+} */
 
-}
-
-.main-body-box {
+.main-box {
     background-color: var(--fgColor);
-    padding: 2rem;
     border-radius: var(--main-radius);
     font-family: "Poppins", sans-serif;
     /* width: fit-content; */
     /* border-color: var(--border-color)!important; */
+    padding: 0px;
+    overflow: hidden;
+}
+
+.main-box-cover{
+
+}
+
+.main-box-body{
+    padding: 2rem;
 }
 
 .main-body-box>figure>img {

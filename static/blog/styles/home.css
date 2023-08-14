@@ -10,7 +10,7 @@
 
 .category-body{
     position: sticky;
-    top: 0;
+    top: calc(.7rem + var(--header-height));
 }
 
 .category-name{

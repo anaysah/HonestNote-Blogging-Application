@@ -63,7 +63,8 @@ body {
     background-color: var(--fgColor);
     padding: 1rem 0;
     font-family: "Poppins", sans-serif;
-
+    position: sticky;
+    top: 0;
 }
 
 .header-box {

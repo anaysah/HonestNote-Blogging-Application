@@ -7,27 +7,28 @@
   <link rel="stylesheet" href="{% static 'blog/styles/blogPage.css' %}">
   <div class="container-fluid py-3">
     <div class="row  mb-3 justify-content-center"">
-      <div class=" col-md-8 main-body-box col-12 card">
-        <div class=" text-center">
-          <img src="{% static 'blog/pic.jpg' %}"
-               alt="Image"
-               class="author-pic img-fluid rounded-circle mx-auto">
+      <div class=" col-md-8 main-box col-12 card">
+        <div class="main-box-cover">
+          {% if post.thumbnail %}
+            <img class="img-fluid" src="{{ post.thumbnail.url }}" alt="Card image cap">
+          {% endif %}
         </div>
-        <span class="d-block text-center">{{ post.author.get_full_name | title }}</span> <span class="date d-block text-center small text-uppercase mb-5">{{ post.date|date:"F j, Y" }}</span>
+        <div class="main-box-body">
+        
         <h2 class="heading blog-title">{{ post.title | title }}</h2>
         <p class="lead mb-4 ">{{ post.snippet }}</p>
 
-        {% if post.thumbnail_url %}
+        {% comment %} {% if post.thumbnail_url %}
           <img class="img-fluid rounded mb-4" src="{{ post.thumbnail_url }}" alt="Card image cap">
         {% elif post.thumbnail %}
           <img class="img-fluid rounded mb-4" src="{{ post.thumbnail.url }}" alt="Card image cap">
-        {% endif %}
+        {% endif %} {% endcomment %}
 
         {{ post.body|safe }}
-        <div class="row mt-5 pt-5 border-top">
-          <div class="col-12">
+        <div class="row mt-5 border-top">
+          <div class="col-12 p-2">
             <span class="fw-bold small mb-1">Share</span>
-            <ul class="social list-unstyled d-flex gap-2">
+            <ul class="social list-unstyled d-flex gap-2 mb-0">
               <li>
                 <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.get_host }}/blog/{{ post.slug }}"
                    target="_blank"><i class="fa-brands fa-facebook fa-xl"></i></a>
@@ -38,13 +39,22 @@
               </li>
             </ul>
           </div>
+          <div class="col-12 border-top p-2">
+            <div class="text-center">
+              <img src="{% static 'blog/pic.jpg' %}"
+                  alt="Image"
+                  class="author-pic img-fluid rounded-circle mx-auto">
+            </div>
+            <span class="d-block text-center">{{ post.author.get_full_name | title }}</span> <span class="date d-block text-center small text-uppercase">{{ post.date|date:"F j, Y" }}</span>
+          </div>
+        </div>
         </div>
       </div>
     </div>
   </div>
   <div class="container-fluid">
     <div class="row  mb-3 justify-content-center"">
-      <div class=" col-md-8 main-body-box">
+      <div class=" col-md-8 main-box p-4">
         <div class="comment-form">
           <h4>
             <strong>Post Comment</strong>
