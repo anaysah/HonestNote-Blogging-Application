@@ -150,8 +150,8 @@ body {
 }
 
 .profile-img{
-    height: 50px;
-    width: 50px;
+    height: 45px;
+    width: 45px;
     border-radius: 50px;
     overflow: hidden;
 }
@@ -277,3 +277,27 @@ span {
     border: 0px;
 }
 /* newsletter box over------------*/
+
+
+/* end footer box ----------------- */
+.end-footer{
+    font-family: var(--poppins);
+}
+
+.end-footer h3{
+    letter-spacing: 2px;
+}
+
+.end-footer a{
+    color: var(--textColor);
+}
+
+#joinus-btn-box{
+    cursor: pointer;
+}
+
+.joinus-box-text{
+    border: 4px solid #ffc107;
+    border-right: 0px;
+}
+/* end footer box over----------------- */
