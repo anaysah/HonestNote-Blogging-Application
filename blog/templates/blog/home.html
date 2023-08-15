@@ -11,28 +11,39 @@
               <div class="slide-body post-entry d-lg-flex">
                 {% if blog.post.thumbnail_url %}
                   <div class="me-lg-4 thumbnail mb-4 mb-lg-0 col-lg-6">
-                    <img src="{{ blog.post.thumbnail_url }}" alt="" srcset="">
+                    <img src="{{ blog.post.thumbnail_url }}" alt="" srcset="" class="featured_blogs_image">
                   </div>
                 {% elif blog.post.thumbnail %}
-                <div class="me-lg-4 thumbnail mb-4 mb-lg-0 col-lg-6">
-                  <img src="{{ blog.post.thumbnail.url }}" alt="" srcset="">
-                </div>
-                {% endif %}
-                <div class="align-self-center content">
-                  <div class="post-meta mb-3">
-                    <a href="{% url 'blogs_by_category' blog.post.category|slugify %}"
-                       class="category">{{ blog.post.category|title }}</a> —
-                    <span class="date">{{ blog.post.date|date:"F j, Y" }}</span>
+                  <div class="me-lg-4 thumbnail mb-4 mb-lg-0 col-lg-6">
+                    <img src="{{ blog.post.thumbnail.url }}" alt="" srcset="" class="featured_blogs_image">
                   </div>
-                  <h2 class="heading">
-                    <strong><a href="{% url 'blogPage' blog.post.slug %}">{{ blog.post.title|title }}</a></strong>
-                  </h2>
-                  <p>{{ blog.post.snippet }}</p>
+                {% endif %}
+
+                <div class="pt-4 pb-2 d-flex flex-column justify-content-between">
+                  <div class="">
+                    <div class="mb-0">
+                      <a href="{% url 'blogs_by_category' blog.post.category|slugify %}"
+                        class="category">{{ blog.post.category|title }}</a> —
+                      <span class="date">{{ blog.post.date|date:"F j, Y" }}</span>
+                    </div>
+                    <h2 class="heading">
+                      <strong><a href="{% url 'blogPage' blog.post.slug %}">{{ blog.post.title|title }}</a></strong>
+                    </h2>
+                    <p>{{ blog.post.snippet }}</p>
+                  </div>
+                  <div>
+                    <img src="{{ blog.post.author.profile.profile_img.url }}" alt="" class="profile-img me-1 card border-2">
+                    <div class="d-flex flex-row justify-content-between">
+                      <span><strong>{{ blog.post.author.get_full_name }}</strong></span>
+                      <a href="{% url 'blogPage' blog.post.slug %}" class="d-flex align-items-center gap-1"><span class="lh-1">Read More</span><i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                  </div>
                 </div>
+
               </div>
             </div>
           {% endfor %}
-          <div class="swiper-slide ">
+          <!-- <div class="swiper-slide ">
             <div class="slide-body post-entry d-lg-flex">
               <div class="me-lg-4 thumbnail mb-4 mb-lg-0 col-lg-6">
                 <img src="https://i.ibb.co/7Ycwd45/image.png" alt="" srcset="">
@@ -53,7 +64,7 @@
                 </p>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
         {% comment %} <div class="swiper-button-next"></div> {% endcomment %}
         {% comment %} <div class="swiper-button-prev"></div> {% endcomment %}

@@ -97,9 +97,6 @@ body {
     top: 0;
     width: 2rem;
 }
-
-
-
 /* ----------end new header */
 
 
@@ -112,18 +109,15 @@ body {
 
 .thumbnail {
     /* height: calc( 55vh - 7% ); */
-    height: 45vh;
+    /* height: 45vh; */
     border-radius: 7px;
     overflow: hidden;
-
 }
 
 .swiper {
     width: 100%;
     height: 100%;
 }
-
-
 
 .swiper-slide {
     /* text-align: center; */
@@ -147,17 +141,20 @@ body {
 
 }
 
-.thumbnail {}
-
-
-.swiper-slide img {
+.swiper-slide .featured_blogs_image {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: bottom;
 }
 
-.swiper-pagination {}
+.profile-img{
+    height: 50px;
+    width: 50px;
+    border-radius: 50px;
+    overflow: hidden;
+}
 
 /* ----------end swiper */
 
