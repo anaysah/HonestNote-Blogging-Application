@@ -248,3 +248,32 @@ span {
     /* padding: 0 0; */
     margin: auto;
 }
+
+/* newsletter box ------------*/
+#newsletter-box{
+    font-family: var(--poppins);
+}
+#newsletter-box h2{
+    /* font-weight: bold; */
+    
+    letter-spacing: 1px;
+}
+
+#newsletter-box p{
+    color: white;
+    letter-spacing: 1px;
+}
+
+.subscribe-form input{
+    background-color: transparent;
+}
+
+.subscribe-form a{
+    text-transform: uppercase;
+    font-weight: bold;
+    background-color: black;
+    border-radius: 4px;
+    color: white;
+    border: 0px;
+}
+/* newsletter box over------------*/
