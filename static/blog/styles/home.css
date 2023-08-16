@@ -48,3 +48,19 @@
 .step-links> :last-child{
     border: none;
 }
+
+
+/* all blogs in recent */
+.card-body{
+    font-family: var(--poppins);
+}
+
+.card-body img{
+    height: 28px;
+    width: 28px;
+}
+
+.card-body .readmore-btn{
+    font-size: large;
+}
+/* end */

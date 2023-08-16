@@ -98,6 +98,7 @@
           </div>
         </div>
       </div>
+
       <div class="col-lg-8 mt-lg-0 mt-2">
         <span >Recents</span>
         {% for post in object_list %}
@@ -108,17 +109,28 @@
             <img class="card-img-top" src="{{ post.thumbnail.url }}" alt="Card image cap">
             {% endif %}
             <div class="card-body">
-              <small><strong><a href="{% url 'blogs_by_category' post.category|slugify %}">{{ post.category|title }}</a></strong></small>
+              <small>
+                <strong>
+                <a href="{% url 'blogs_by_category' post.category|slugify %}">{{ post.category|title }}</a> </strong> - 
+                <small class="date">{{ post.date|date:"F j, Y" }}</small>
+              </small>
+
               <h4 class="card-title">
                 <strong>
                   <a href="{% url 'blogPage' post.slug %}">{{ post.title|title }}</a>
                 </strong>
               </h4>
               <p class="card-text">{{ post.snippet }}</p>
-              <p class="card-text row">
-                <small class=" col text-color">{{ post.date|date:"F j, Y" }}</small>
-                <small class=" col text-color" align="right">{{ post.author.get_full_name }}</small>
-              </p>
+              <div class="d-flex justify-content-between">
+                <div class="d-flex align-items-center">
+                  <img src="{{ post.author.profile.profile_img.url }}" alt="" class="profile-img me-1 card border-2">
+                  <small class=" col text-color" align="right">{{ post.author.get_full_name }}</small>
+                </div>
+                <a href="{% url 'blogs_by_category' post.category|slugify %}" class="d-flex align-items-center gap-1">
+                  <span class="lh-1 readmore-btn">Read More</span><i class="fa-solid fa-arrow-right"></i>
+                </a>
+              </div>
+              
             </div>
           </div>
         {% endfor %}
