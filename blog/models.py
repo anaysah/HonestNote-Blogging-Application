@@ -32,7 +32,7 @@ def get_image_filename(instance, filename):
     return file_path
 
 class Post(models.Model):
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=100)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.PROTECT, null=True)
     thumbnail = models.ImageField(upload_to=get_image_filename, blank=True, null=True)
