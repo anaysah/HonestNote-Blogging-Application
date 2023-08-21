@@ -76,3 +76,16 @@ class Image(models.Model):
 
     def __str__(self):
         return str(self.image)
+    
+class JoinUsSubmission(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    message = models.TextField()
+    submitted_at = models.DateTimeField(auto_now_add=True)
+    
+
+    def get_absolute_url(self):
+        return reverse('joinus')
+
+    def __str__(self):
+        return self.name

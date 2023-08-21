@@ -47,6 +47,9 @@
     color: var(--textColor);
 }
 
+.font-family{
+    font-family: var(--poppins);
+}
 
 
 body {

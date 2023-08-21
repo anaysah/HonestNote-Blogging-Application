@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import homeView, blogPage,SearchView, BlogsByCategory
+from .views import homeView, blogPage,SearchView, BlogsByCategory, JoinusView, joinus_otp_mail
 
 urlpatterns = [
     path('', homeView.as_view(), name='home'),
@@ -8,6 +8,9 @@ urlpatterns = [
     path('search/', SearchView.as_view(), name='search_results'),
     path('category/<str:category_name>/', BlogsByCategory.as_view(), name='blogs_by_category'),
 
+    path('joinus/', JoinusView.as_view(), name='joinus'),
+
+    path('ajax/joinus_otp_mail', joinus_otp_mail, name='joinus_otp_mail'),
 ]
 
 

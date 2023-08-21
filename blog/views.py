@@ -2,13 +2,16 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView , DetailView, CreateView, UpdateView, DeleteView
 from django.utils.safestring import SafeText
 from django.db.models import Q
-from .models import Post, Category, FeaturedBlog
+from .models import Post, Category, FeaturedBlog, JoinUsSubmission
 from .forms import  CommentForm
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.views.generic.edit import FormMixin
 from django.core.paginator import Paginator
+from django import forms
+from django.contrib import messages
+
 
 
 class homeView(ListView):
@@ -92,4 +95,72 @@ class blogPage(FormMixin,DetailView):
             return self.form_valid(form)
         else:
             return self.form_invalid(form) 
+        
 
+class JoinUsSubmissionForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        placeholder = "Write why you want to join us and how will you help us to grow."
+        self.fields['name'].widget.attrs.update({'class': 'form-control'})
+        self.fields['email'].widget.attrs.update({'class': 'form-control'})
+        self.fields['message'].widget.attrs.update({'class': 'form-control', 'placeholder': placeholder})
+
+    class Meta:
+        model = JoinUsSubmission
+        fields = ['name', 'email', 'message']
+
+class JoinusView(CreateView):
+    model = JoinUsSubmission
+    template_name = 'blog/join_us_form.html'
+    form_class = JoinUsSubmissionForm
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        submitted_otp = self.request.POST.get('otp')  # Get submitted OTP
+        stored_otp = self.request.session.get('joinus_otp')  # Get stored OTP
+
+        if submitted_otp == stored_otp:
+            messages.success(self.request, 'We will review and get back to you soon.')
+            return response
+        else:
+            messages.error(self.request, 'Invalid OTP. Please try again.')
+            return response
+    
+from random import randint
+from django.core.mail import send_mail
+from django.conf import settings
+from django.http import JsonResponse
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
+
+def generate_otp():
+    return ''.join([str(randint(0, 9)) for _ in range(6)])
+
+# Assuming you have access to the request object
+def store_otp_in_session(request):
+    otp = generate_otp()
+    request.session['joinus_otp'] = otp
+    request.session.modified = True  # Mark the session as modified
+    return otp
+
+def joinus_otp_mail(request):
+    email = request.POST.get('email')
+    
+    try:
+        validate_email(email)  # Validate the email using built-in function
+    except ValidationError:
+        return JsonResponse({'message': 'Invalid email. Please enter a valid email address.'}, status=400)
+
+    otp = store_otp_in_session(request)
+    subject = 'Your OTP for Joining Us'
+    message = f'Your OTP is: {otp}'
+    from_email = settings.EMAIL_HOST_USER
+    recipient_list = [email]
+
+    try:
+        send_mail(subject, message, from_email, recipient_list)
+        response = {'message': 'We have sent you an OTP for verification.'}
+        return JsonResponse(response)
+    except:
+        response = {'message': 'There was an error sending the OTP email.'}
+        return JsonResponse(response, status=500)
