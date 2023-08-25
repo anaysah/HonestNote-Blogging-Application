@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,12 +20,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-1bc+t#*(n7+!4$nues!!dxh0f25()=izf+%4%5^yjv2%$ek#x!'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = str(os.environ.get('DEBUG')) == "1"     # "1" == ture
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["localhost", "*"]
+if not DEBUG:
+    ALLOWED_HOSTS += [os.environ.get('ALLOWED_HOSTS')]
 
 
 # Application definition
@@ -91,24 +93,14 @@ DATABASES = {
     # }
     'default': {
         'ENGINE': "django.db.backends.postgresql_psycopg2",
-        'HOST': "db.lonrmmupieaujiybsech.supabase.co",
-        'NAME': "postgres",
-        'USER': "postgres",
-        'PASSWORD': "bER8WoYHrIniDp0Y",
-        'PORT': "5432",
+        'HOST': os.environ.get('SUPABASE_HOST'),
+        'NAME': os.environ.get('SUPABASE_NAME'),
+        'USER': os.environ.get('SUPABASE_USER'),
+        'PASSWORD': os.environ.get('SUPABASE_PASSWORD'),
+        'PORT': os.environ.get('SUPABASE_PORT'),
     }
 }
 
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dznklkrvz',
-    'API_KEY': '742231279217474',
-    'API_SECRET': '_2zby-moloIBc3lKlbmIR5mxAQs'
-}
-
-import cloudinary
-cloudinary.config(cloud_name='dznklkrvz',
-                  api_key='742231279217474',
-                  api_secret='_2zby-moloIBc3lKlbmIR5mxAQs')
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -173,5 +165,16 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'anaysah2003@gmail.com'
-EMAIL_HOST_PASSWORD = "xgdrllphgmscwthf"
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET')
+}
+
+import cloudinary
+cloudinary.config(cloud_name=os.environ.get('CLOUDINARY_CLOUD_NAME'),
+                  api_key=os.environ.get('CLOUDINARY_API_KEY'),
+                  api_secret=os.environ.get('CLOUDINARY_API_SECRET'))
