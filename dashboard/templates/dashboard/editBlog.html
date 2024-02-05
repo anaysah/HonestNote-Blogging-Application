@@ -1,37 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        #all-images img {
-            border: 2px black solid;
-            border-radius: 5px;
-            height: 120px;
-        }
-
-        #id_body_div {
-            width: 50%;
-        }
-    </style>
-</head>
-
-<body>
-
-
+{% extends "dashboard/base.html" %}
+{% block mainbody %}
     {% load static %}
-
+    <link rel="stylesheet" href="{% static "dashboard/css/editBlog.css" %}">
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <!-- {{ form.as_p }} -->
 
         {% for field in form %}
-        <div class="form-group" id="{{ field.id_for_label }}_div">
-            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-            {{ field }}
-        </div>    
+            {% comment %} <div class="form-group" id="{{ field.id_for_label }}_div"> {% endcomment %}
+            <div class="mb-3">
+                <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                {{ field }}
+            </div>    
         {% endfor %}
 
         <input type="submit" value="Save">
@@ -131,6 +111,4 @@
     <script src="{% static 'dashboard/js/script.js' %}"></script>
     {% comment %} <script src="{% static 'dashboard/js/superbuildScirpt.js' %}"></script> {% endcomment %}
 
-</body>
-
-</html>
+{% endblock mainbody %}

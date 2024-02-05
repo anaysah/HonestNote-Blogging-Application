@@ -11,6 +11,7 @@ from django.shortcuts import redirect
 from django.db import IntegrityError
 
 from django import forms
+from .forms import PostForm
 from blog.models import Post, Image
 # from ckeditor.widgets import CKEditorWidget
 
@@ -53,10 +54,6 @@ class AddBlogView(LoginRequiredMixin,View):
         return redirect('edit', pk=new_post.pk)
     
 
-class PostForm(forms.ModelForm):
-    class Meta:
-        model = Post
-        fields = ['title', 'category', 'thumbnail', 'thumbnail_url', 'snippet', 'body', 'slug', 'is_draft']
         
 
 class EditBlogView(LoginRequiredMixin, UserPassesTestMixin, UpdateView ):

@@ -14,7 +14,7 @@ def main():
     """Run administrative tasks."""
     DOT_ENV_PATH = pathlib.Path() / '.env'
     if DOT_ENV_PATH.exists():
-        dotenv.read_dotenv(str(DOT_ENV_PATH))
+        dotenv.load_dotenv(str(DOT_ENV_PATH))
     # dotenv.read_dotenv()
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'blogWebApp.settings')
     try:
