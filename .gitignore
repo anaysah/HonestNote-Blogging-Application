@@ -30,3 +30,4 @@ runserver.bat
 
 blog_data.json
 db.sqlite3
+.venv/
